@@ -57,6 +57,22 @@ h2 {
     color: #333;
     margin-bottom: 40px;
 }
+p{
+    text-align: center;
+    font-size: 16px;
+    color: #333;
+    margin-bottom: 40px; 
+}
+
+p a {
+    color: #5f4b66; /* Color del enlace */
+    text-decoration: none; /* Elimina el subrayado del enlace */
+    font-weight: bold; /* Resalta el enlace */
+}
+
+p a:hover {
+    text-decoration: underline; /* Subrayado al pasar el cursor */
+}
 
 .form-group {
     margin-bottom: 20px; /* Añadimos margen entre los campos */
@@ -77,6 +93,21 @@ input {
     border-radius: 5px;
     font-size: 16px;
 }
+
+/* Estilo para el enlace "Olvidaste tu contraseña?" */
+.forgot-password {
+    text-align:start; /* Centra el texto */
+    font-size: 16px; /* Tamaño de fuente */
+    color: #5f4b66; /* Color del texto */
+    display: block; /* Asegura que esté en una línea separada */
+    margin-top: 15px; /* Separación superior */
+    margin-bottom: 30px;
+}
+
+.forgot-password:hover {
+    text-decoration: underline; /* Subrayado al pasar el cursor */
+}
+
 
 button {
     width: 60%; /* Ajustamos el ancho del botón al 60% */

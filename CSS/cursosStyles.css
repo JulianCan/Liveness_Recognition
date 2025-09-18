@@ -65,6 +65,7 @@ nav .logo h1 {
     align-items: center;
     justify-content: center; /* Alinea los iconos al centro */
     margin-left: 20px; /* Asegura que los iconos estén alejados del contenido principal */
+    color: #777;
 }
 
 .user-icons span {
@@ -80,13 +81,17 @@ nav .logo h1 {
     margin-right: 30px;
 }
 
+.user-icons :hover{
+    color: #333;
+}
+
 /* Main content */
 .main-content {
-    padding: 20px;
+    margin: 50px 200px;
     flex-grow: 1; /* Permite que ocupe el espacio disponible */
     text-align: left;
-    padding-top: 50px; /* Da espacio al título */
 }
+
 
 .main-content h2 {
     font-size: 28px;
@@ -120,32 +125,66 @@ nav .logo h1 {
     gap: 20px;
 }
 
+/* Cursos grid */
+.courses-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+}
+
+/* Enlazamos las tarjetas para hacerlas clickeables */
 .course-card {
     background-color: white;
     padding: 20px;
     border-radius: 8px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Sombra inicial */
     text-align: center;
+    height: 350px;
+    display: block; /* Asegura que el enlace ocupe toda la tarjeta */
+    text-decoration: none; /* Elimina el subrayado */
+    color: inherit; /* Hereda el color del texto */
+    transition: transform 0.3s ease, box-shadow 0.3s ease; /* Transición suave para el hover */
+}
+
+/* Para las imágenes dentro de las tarjetas */
+.image-container {
+    height: 200px;
+    width: 100%;
 }
 
 .course-card h3 {
     font-size: 22px;
     margin-bottom: 10px;
+    text-align: left;
 }
 
 .course-card p {
     font-size: 16px;
     color: #777;
+    text-align: left;
+}
+
+/* Efecto de hover */
+.course-card:hover {
+    transform: scale(1.05); /* Aumenta el tamaño de la tarjeta */
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Sombra más grande */
+    cursor: pointer; /* Cambia el cursor para indicar que es clickeable */
 }
 
 /* Footer */
 .footer {
     display: flex;
-    justify-content: space-between;
-    padding: 40px 20px;
+    padding: 30px 20px;
     background-color: #4e3b53;
     color: white;
     margin-top: auto; /* Hace que el footer esté siempre al final */
+    width: 100%;
+    justify-content: center; /* Centra los tres elementos */
+    gap: 150px; /* Espaciado entre los items */
+}
+
+.footer-item {
+    text-align: center; /* Alinea el texto dentro de cada item */
 }
 
 .footer-item h4 {

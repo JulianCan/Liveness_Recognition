@@ -176,3 +176,46 @@ button:hover {
     height: auto;
     border-radius: 10px;
 }
+
+/* Estilo de las secciones */
+#video{
+    margin-bottom: 20px;
+}
+#register-section,
+#gesture-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* Video y botones de grabación */
+#gesture-section video {
+    display: block;
+    margin-top: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    width: 100%;
+    height: auto;
+}
+
+/* Estilo para los botones */
+#start-recording, #stop-recording, #enviar-registro {
+    width: 100%;
+    padding: 15px;
+    background-color: #5f4b66;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 18px;
+    cursor: pointer;
+    margin-top: 15px; /* Espacio entre los botones */
+}
+
+/* Espacio de 40px entre los botones */
+#enviar-registro {
+    margin-top: 20px; /* Espacio de 40px debajo del botón "Iniciar Grabación" */
+}
+
+#start-recording:hover, #stop-recording:hover, #enviar-registro:hover {
+    background-color: #46304b;
+}

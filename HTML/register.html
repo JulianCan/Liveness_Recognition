@@ -8,14 +8,15 @@
 </head>
 <body>
     <main class="container">
-        <section class="form-section">
+        <!-- Sección de registro -->
+        <section class="form-section" id="register-section">
             <header>
                 <h1>SOLUTION TECH</h1>
             </header>
 
             <div class="form-container">
                 <h2>REGISTER</h2>
-                <form action="#" method="POST">
+                <form id="register-form">
                     <div class="form-row1">
                         <div class="form-group half-width">
                             <label for="nombre">Nombre</label>
@@ -61,8 +62,25 @@
                         </label>
                     </div>
 
-                    <button type="submit">Registrarse</button>
+                    <button type="button" id="register-btn">Registrarse</button>
                 </form>
+            </div>
+        </section>
+
+        <!-- Sección de grabación de gesto facial -->
+        <section class="form-section" id="gesture-section" style="display: none;">
+            <header>
+                <h1>SOLUTION TECH - Gesto Facial</h1>
+            </header>
+
+            <div class="form-container">
+                <h2>Graba tu gesto facial</h2>
+                <video id="video" width="100%" height="auto" autoplay></video>
+                <button type="button" id="start-recording" onclick="startRecording()">Iniciar Grabación</button>
+                <button type="button" id="stop-recording" onclick="stopRecording()" style="display: none;">Detener Grabación</button>
+                <input type="hidden" name="video" id="video-input" required>
+
+                <button type="button" id="enviar-registro" onclick="redirectToConfirmation()">Enviar Registro</button>
             </div>
         </section>
 
@@ -71,5 +89,6 @@
             <img src="image.jpg" alt="Imagen del producto" />
         </section>
     </main>
+    <script src="\JS\script.js"></script>
 </body>
 </html>

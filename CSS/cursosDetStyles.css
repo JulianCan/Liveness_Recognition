@@ -1,0 +1,288 @@
+/* Reset de estilos */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f9e4e4;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh; /* Asegura que el body ocupe toda la pantalla */
+}
+
+/* Estilo del header y la barra de navegación */
+header {
+    background-color: #fff;
+    padding: 20px;
+    display: flex;
+    justify-content:center;
+    align-items: center;
+    text-align: center;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+}
+
+nav .logo h1 {
+    font-size: 24px;
+    padding-left: 150px;
+    color: #333;
+}
+
+.nav-links {
+    list-style: none;
+    display: flex;
+    margin-left: 120px; /* Para alinear los enlaces a la derecha */
+    margin-right: auto;
+}
+
+.nav-links li {
+    margin-right: 30px; /* Espaciado entre los enlaces */
+}
+
+.nav-links li a {
+    text-decoration: none;
+    color: #333;
+    font-size: 16px;
+    font-weight: 500;
+    transition: color 0.3s ease;
+}
+
+.nav-links li a:hover {
+    color: #007BFF; /* Cambia el color al pasar el ratón */
+}
+
+.user-icons{
+    display: flex;
+    align-items: center;
+    justify-content: center; /* Alinea los iconos al centro */
+    margin-left: 20px; /* Asegura que los iconos estén alejados del contenido principal */
+    color: #777;
+}
+
+.user-icons span {
+    margin: 0 10px;
+    font-size: 24px; /* Aumentamos el tamaño de los iconos */
+    cursor: pointer;
+}
+
+.user-icons .profile-icon{
+    align-items: center;
+    font-size: 40px;
+    margin-left: 25px;
+    margin-right: 30px;
+}
+
+.user-icons :hover{
+    color: #333;
+}
+
+
+/* Hero Section */
+.hero {
+    display: flex;
+    justify-content: space-between;
+    padding: 50px;
+    background-color: #fff;
+    margin-bottom: 30px;
+}
+
+.hero .hero-text {
+    flex: 1;
+    padding-right: 20px;
+}
+
+.hero .hero-text h1 {
+    font-size: 36px;
+    margin-bottom: 10px;
+}
+
+.hero .hero-text p {
+    font-size: 20px;
+    margin-bottom: 20px;
+}
+
+.hero .hero-text button {
+    padding: 10px 20px;
+    background-color: #4e3b53;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.hero .hero-text button:hover {
+    background-color: #333;
+}
+
+.hero .hero-image {
+    flex: 1;
+}
+
+.hero .hero-image img {
+    width: 100%;
+    height: auto;
+}
+
+/* Descripción del curso */
+.course-description {
+    padding: 20px;
+    background-color: #fff;
+    margin-bottom: 30px;
+}
+
+.course-description h2 {
+    font-size: 28px;
+    margin-bottom: 20px;
+}
+
+.course-description p {
+    font-size: 16px;
+    color: #777;
+}
+
+/* Módulos */
+.course-modules {
+    padding: 20px;
+    background-color: #fff;
+    margin-bottom: 30px;
+}
+
+.module-card {
+    margin-bottom: 20px;
+}
+
+.module-title {
+    background-color: #4e3b53;
+    color: white;
+    padding: 10px;
+    width: 100%;
+    border: none;
+    text-align: left;
+    cursor: pointer;
+}
+
+.module-title:hover {
+    background-color: #333;
+}
+
+.module-content {
+    display: none;
+    padding: 10px;
+    background-color: #f1f1f1;
+    margin-top: 10px;
+}
+
+/* Información del Instructor */
+.instructor-info {
+    padding: 20px;
+    background-color: #fff;
+}
+
+.instructor-info h2 {
+    font-size: 28px;
+    margin-bottom: 20px;
+}
+
+.instructor-card {
+    display: flex;
+    align-items: center;
+}
+
+.instructor-card img {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    margin-right: 20px;
+}
+
+.instructor-details h3 {
+    font-size: 22px;
+    margin-bottom: 5px;
+}
+
+.instructor-details p {
+    font-size: 16px;
+    color: #777;
+}
+
+/* Recomendados */
+.recommended-courses {
+    padding: 20px;
+    background-color: #fff;
+}
+
+.recommended-courses h2 {
+    font-size: 28px;
+    margin-bottom: 20px;
+}
+
+.recommended-courses-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+}
+
+.recommended-card {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+.recommended-card h3 {
+    font-size: 20px;
+    margin-bottom: 10px;
+}
+
+.recommended-card p {
+    font-size: 16px;
+    color: #777;
+}
+
+/* Footer */
+.footer {
+    display: flex;
+    padding: 30px 20px;
+    background-color: #4e3b53;
+    color: white;
+    margin-top: auto; /* Hace que el footer esté siempre al final */
+    width: 100%;
+    justify-content: center; /* Centra los tres elementos */
+    gap: 150px; /* Espaciado entre los items */
+}
+
+.footer-item {
+    text-align: center; /* Alinea el texto dentro de cada item */
+}
+
+.footer-item h4 {
+    font-size: 18px;
+    margin-bottom: 15px;
+}
+
+.footer-item ul {
+    list-style: none;
+}
+
+.footer-item ul li {
+    margin: 5px 0;
+}
+
+.footer-item ul li a {
+    color: white;
+    text-decoration: none;
+}
+
+.footer-item ul li a:hover {
+    text-decoration: underline;
+}

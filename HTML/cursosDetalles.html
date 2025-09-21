@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -19,7 +19,6 @@
                 <li><a href="#">Área Personal</a></li>
             </ul>
             <div class="user-icons">
-                <!-- Usamos los iconos de Google Fonts -->
                 <span class="material-icons">notifications</span> <!-- Notificaciones -->
                 <span class="material-icons">chat</span> <!-- Chat -->
                 <span class="material-icons">email</span> <!-- Correo -->
@@ -49,79 +48,83 @@
             </p>
         </section>
 
-        <!-- Módulos -->
-        <section class="course-modules">
-            <h2>Módulos</h2>
-            <div class="module-card">
-                <button class="module-title" onclick="toggleModule(1)">Módulo 1</button>
-                <div class="module-content" id="module-1">
-                    <p>Módulo 1 - 2 horas para finalizar</p>
+        <!-- Módulos e Instructores (unidos en una misma sección) -->
+        <section class="course-modules-instructors">
+            <div class="modules-section">
+                <h2>Módulos</h2>
+                <div class="module-card">
+                    <button class="module-title" onclick="toggleModule(1)">Módulo 1</button>
+                    <div class="module-content" id="module-1">
+                        <p>Módulo 1 - 2 horas para finalizar</p>
+                    </div>
+                </div>
+                <div class="module-card">
+                    <button class="module-title" onclick="toggleModule(2)">Módulo 2</button>
+                    <div class="module-content" id="module-2">
+                        <p>Módulo 2 - 2 horas para finalizar</p>
+                    </div>
+                </div>
+                <div class="module-card">
+                    <button class="module-title" onclick="toggleModule(3)">Módulo 3</button>
+                    <div class="module-content" id="module-3">
+                        <p>Módulo 3 - 2 horas para finalizar</p>
+                    </div>
+                </div>
+                <div class="module-card">
+                    <button class="module-title" onclick="toggleModule(4)">Módulo 4</button>
+                    <div class="module-content" id="module-4">
+                        <p>Módulo 4 - 2 horas para finalizar</p>
+                    </div>
+                </div>
+                <div class="module-card">
+                    <button class="module-title" onclick="toggleModule(5)">Módulo 5</button>
+                    <div class="module-content" id="module-5">
+                        <p>Módulo 5 - 2 horas para finalizar</p>
+                    </div>
                 </div>
             </div>
-            <div class="module-card">
-                <button class="module-title" onclick="toggleModule(2)">Módulo 2</button>
-                <div class="module-content" id="module-2">
-                    <p>Módulo 2 - 2 horas para finalizar</p>
-                </div>
-            </div>
-            <div class="module-card">
-                <button class="module-title" onclick="toggleModule(3)">Módulo 3</button>
-                <div class="module-content" id="module-3">
-                    <p>Módulo 3 - 2 horas para finalizar</p>
-                </div>
-            </div>
-            <div class="module-card">
-                <button class="module-title" onclick="toggleModule(4)">Módulo 4</button>
-                <div class="module-content" id="module-4">
-                    <p>Módulo 4 - 2 horas para finalizar</p>
-                </div>
-            </div>
-            <div class="module-card">
-                <button class="module-title" onclick="toggleModule(5)">Módulo 5</button>
-                <div class="module-content" id="module-5">
-                    <p>Módulo 5 - 2 horas para finalizar</p>
+
+            <!-- Información del Instructor -->
+            <div class="instructor-section">
+                <h2>Instructores</h2>
+                <div class="instructor-card">
+                    <img src="instructor.jpg" alt="Instructor">
+                    <div class="instructor-details">
+                        <h3>Juan Pérez</h3>
+                        <p>Universidad XYZ</p>
+                        <p>5 cursos</p>
+                    </div>
                 </div>
             </div>
         </section>
 
-        <!-- Instructores -->
-        <section class="instructor-info">
-            <h2>Instructores</h2>
-            <div class="instructor-card">
-                <img src="instructor.jpg" alt="Instructor">
-                <div class="instructor-details">
-                    <h3>Juan Pérez</h3>
-                    <p>Universidad XYZ</p>
-                    <p>5 cursos</p>
-                </div>
+    <!-- Recomendados -->
+    <section class="recommended-courses">
+        <h2>Recomendados</h2>
+        <div class="recommended-courses-grid">
+            <div class="recommended-card">
+                <img src="image1.jpg" alt="Imagen del curso recomendado 1">
+                <h3>Curso Recomendado 1</h3>
+                <p>Breve descripción del curso.</p>
             </div>
-        </section>
-
-        <!-- Recomendados -->
-        <section class="recommended-courses">
-            <h2>Recomendados</h2>
-            <div class="recommended-courses-grid">
-                <div class="recommended-card">
-                    <h3>Curso Recomendado 1</h3>
-                    <p>Breve descripción del curso.</p>
-                </div>
-                <div class="recommended-card">
-                    <h3>Curso Recomendado 2</h3>
-                    <p>Breve descripción del curso.</p>
-                </div>
-                <div class="recommended-card">
-                    <h3>Curso Recomendado 3</h3>
-                    <p>Breve descripción del curso.</p>
-                </div>
-                <div class="recommended-card">
-                    <h3>Curso Recomendado 4</h3>
-                    <p>Breve descripción del curso.</p>
-                </div>
+            <div class="recommended-card">
+                <img src="image2.jpg" alt="Imagen del curso recomendado 2">
+                <h3>Curso Recomendado 2</h3>
+                <p>Breve descripción del curso.</p>
             </div>
-        </section>
+            <div class="recommended-card">
+                <img src="image3.jpg" alt="Imagen del curso recomendado 3">
+                <h3>Curso Recomendado 3</h3>
+                <p>Breve descripción del curso.</p>
+            </div>
+            <div class="recommended-card">
+                <img src="image4.jpg" alt="Imagen del curso recomendado 4">
+                <h3>Curso Recomendado 4</h3>
+                <p>Breve descripción del curso.</p>
+            </div>
+        </div>
+    </section>
     </main>
-
-
 
     <footer class="footer">
         <div class="footer-item">

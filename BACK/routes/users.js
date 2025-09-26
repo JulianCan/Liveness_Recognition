@@ -1,7 +1,7 @@
 // BACK/routes/users.js
 const express = require("express");
 const router = express.Router();
-const pool = require("../db/pool");
+const { pool } = require("../pool"); // <--- cambiar a destructuring
 
 // Helpers
 const isEmail = (v) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v);
@@ -43,7 +43,7 @@ router.get("/:id", async (req, res) => {
 });
 
 // POST /api/users  {name, email, password_hash, role}
-router.post("/", async (req, res) => {
+router.post("/add", async (req, res) => {  // Aquí debe coincidir "add"
   try {
     const { name, email, password_hash, role } = req.body;
 
@@ -63,7 +63,6 @@ router.post("/", async (req, res) => {
     );
     res.status(201).json(insert.rows[0]);
   } catch (e) {
-    // unique (email) case-insensitive: violación de índice
     if (e.code === "23505") {
       return res.status(409).json({ error: "El email ya está registrado" });
     }

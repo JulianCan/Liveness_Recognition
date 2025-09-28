@@ -3,6 +3,7 @@ const bodyParser = require('body-parser');
 const dotenv = require('dotenv');
 const { connectDB } = require('./pool'); // Import PostgreSQL connection
 const userRoutes = require('./routes/users'); // Import your user routes (add others similarly)
+const profilesRouter = require("./routes/profiles");
 const submissionsRoutes = require('./routes/submissions');
 const quizzesRoutes = require('./routes/quizzes');
 const questionsRoutes = require('./routes/questions');
@@ -29,6 +30,7 @@ connectDB();
 
 // Define your API routes
 app.use('/api/users', userRoutes);
+app.use("/api/profiles", profilesRouter);
 app.use('/api/submissions', submissionsRoutes);
 app.use('/api/quizzes', quizzesRoutes);
 app.use('/api/questions', questionsRoutes);

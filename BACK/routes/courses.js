@@ -41,7 +41,7 @@ router.get("/:id", async (req, res) => {
 
 // POST /api/courses
 // body: { owner_id, title, slug, description, cover_url, status }
-router.post("/", async (req, res) => {
+router.post("/add", async (req, res) => {
   const { owner_id, title, slug, description, cover_url, status } = req.body;
   if (!owner_id || !title || !slug) {
     return res.status(400).json({ error: "owner_id, title y slug son obligatorios" });

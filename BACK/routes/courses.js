@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const pool = require("../pool");
+const { pool } = require("../pool");
 
 // GET /api/courses?page=&limit=
 router.get("/", async (req, res) => {

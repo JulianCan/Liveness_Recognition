@@ -16,6 +16,7 @@ const enrollmentsRoutes = require('./routes/enrollments');
 const coursesRoutes = require('./routes/courses');
 const attemptsRoutes = require('./routes/attempts');
 const answersRoutes = require('./routes/answers');
+const mediaRoutes = require('./routes/media');
 
 // Load environment variables
 dotenv.config();
@@ -43,6 +44,7 @@ app.use('/api/enrollments', enrollmentsRoutes);
 app.use('/api/courses', coursesRoutes);
 app.use('/api/attempts', attemptsRoutes);
 app.use('/api/answers', answersRoutes);
+app.use('/api/media', mediaRoutes);
 
 
 // Set the port

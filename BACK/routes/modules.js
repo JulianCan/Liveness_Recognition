@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const pool = require("../pool");
+const { pool } = require("../pool");
 
 // LIST with pagination
 router.get("/", async (req, res) => {
@@ -29,7 +29,7 @@ router.get("/:id", async (req, res) => {
 });
 
 // CREATE
-router.post("/", async (req, res) => {
+router.post("/add", async (req, res) => {
   const { course_id, title, position } = req.body;
   if (!course_id || !title) return res.status(400).json({ error: "course_id y title son obligatorios" });
   try {

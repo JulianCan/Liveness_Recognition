@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const pool = require("../pool");
+const { pool } = require("../pool");
 
 // LIST with pagination
 router.get("/", async (req, res) => {
@@ -28,7 +28,7 @@ router.get("/:id", async (req, res) => {
   }
 });
 
-router.post("/", async (req, res) => {
+router.post("/add", async (req, res) => {
   const { user_id, course_id, status, progress_pct } = req.body;
   if (!user_id || !course_id) return res.status(400).json({ error: "user_id y course_id son obligatorios" });
   try {
@@ -39,7 +39,12 @@ router.post("/", async (req, res) => {
     );
     res.status(201).json(q.rows[0]);
   } catch (e) {
-    if (e.code === "23505") return res.status(409).json({ error: "El usuario ya está inscrito en el curso" });
+    if (e.code === "23505") {
+      return res.status(409).json({ error: "El usuario ya está inscrito en el curso" });
+    }
+    if (e.code === "23503") {
+      return res.status(400).json({ error: "El user_id o course_id proporcionado no existe" });
+    }
     console.error(e); res.status(500).json({ error: "Error al crear enrollment" });
   }
 });

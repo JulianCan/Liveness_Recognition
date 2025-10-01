@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const pool = require("../pool");
+const { pool } = require("../pool");
 
 // LIST with pagination
 router.get("/", async (req, res) => {
@@ -28,7 +28,7 @@ router.get("/:id", async (req, res) => {
   }
 });
 
-router.post("/", async (req, res) => {
+router.post("/add", async (req, res) => {
   const { quiz_id, type, prompt, points } = req.body;
   if (!quiz_id || !type || !prompt) return res.status(400).json({ error: "quiz_id, type y prompt son obligatorios" });
   try {

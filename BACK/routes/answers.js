@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const pool = require("../pool");
+const { pool } = require("../pool");
 
 // LIST with pagination
 router.get("/", async (req, res) => {
@@ -28,7 +28,7 @@ router.get("/:id", async (req, res) => {
   }
 });
 
-router.post("/", async (req, res) => {
+router.post("/add", async (req, res) => {
   const { attempt_id, question_id, option_id, text_answer } = req.body;
   if (!attempt_id || !question_id) return res.status(400).json({ error: "attempt_id y question_id son obligatorios" });
   try {

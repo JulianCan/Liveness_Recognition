@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const pool = require("../pool");
+const { pool } = require("../pool");
 
 // LIST with pagination
 router.get("/", async (req, res) => {
@@ -28,7 +28,7 @@ router.get("/:id", async (req, res) => {
   }
 });
 
-router.post("/", async (req, res) => {
+router.post("/add", async (req, res) => {
   const { owner_id, url, type, size_bytes, checksum } = req.body;
   if (!owner_id || !url || !type) return res.status(400).json({ error: "owner_id, url y type son obligatorios" });
   try {
@@ -38,7 +38,12 @@ router.post("/", async (req, res) => {
       [owner_id, url, type, size_bytes || null, checksum || null]
     );
     res.status(201).json(q.rows[0]);
-  } catch (e) { console.error(e); res.status(500).json({ error: "Error al crear media" }); }
+  } catch (e) {
+    if (e.code === "23503") {
+      return res.status(400).json({ error: "El owner_id proporcionado no existe" });
+    }
+    console.error(e); res.status(500).json({ error: "Error al crear media" });
+  }
 });
 
 router.patch("/:id", async (req, res) => {

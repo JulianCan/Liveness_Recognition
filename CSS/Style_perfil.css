@@ -1,0 +1,78 @@
+/* ===== Perfil de Usuario ===== */
+.perfil-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 60px 20px;
+  background: #f4f6f9;
+}
+
+.perfil-card {
+  background: #fff;
+  padding: 30px;
+  border-radius: 12px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+  text-align: center;
+  width: 320px;
+}
+
+/* Ocultar input de archivo */
+#uploadFoto {
+  display: none;
+}
+
+/* Botón subir foto */
+.foto-container label {
+  background: #61dafb;
+  color: #20232a;
+  padding: 8px 15px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: bold;
+  transition: 0.3s;
+  display: block;       /* Para que quede centrado */
+  margin: 10px auto 0;  /* Lo pone debajo de la foto */
+  width: 120px;         /* Mismo ancho que "Editar Perfil" */
+}
+
+.foto-container label:hover {
+  background: #21a1f1;
+  color: #fff;
+}
+
+.perfil-foto {
+  width: 130px;
+  height: 130px;
+  border-radius: 50%;
+  margin-bottom: 10px;
+  object-fit: cover;
+  border: 3px solid #61dafb;
+}
+
+.perfil-card h2 {
+  margin: 15px 0;
+  color: #20232a;
+}
+
+.perfil-card p {
+  color: #555;
+  margin: 5px 0;
+}
+
+.perfil-card .btn {
+  margin-top: 15px;
+  padding: 10px 20px;
+  background: #61dafb;
+  color: #20232a;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: 0.3s;
+  width: 120px;   /* Igual ancho que el botón de subir foto */
+}
+
+.perfil-card .btn:hover {
+  background: #21a1f1;
+  color: #fff;
+}

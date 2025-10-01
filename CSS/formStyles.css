@@ -1,0 +1,222 @@
+/* Reseteo básico para la apariencia consistente */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f5f5f5;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+/* Contenedor principal */
+.container {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    background-color: #f9f9f9;
+    border-radius: 10px;
+}
+
+/* Sección del formulario */
+.form-section {
+    width: 33.3%; /* Ajustamos el ancho del formulario */
+    padding: 40px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+header {
+    text-align: center;
+    margin-bottom: 40px;
+    margin-top: 5%;
+}
+
+h1 {
+    text-align: center;
+    font-size: 54px;
+    font-weight: 700;
+    color: #5f4b66;
+}
+
+/* Estilo del formulario */
+.form-container {
+    display: flex;
+    flex-direction: column;
+}
+
+h2 {
+    text-align: center;
+    font-size: 24px;
+    color: #333;
+    margin-bottom: 40px;
+}
+p{
+    text-align: center;
+    font-size: 16px;
+    color: #333;
+    margin-bottom: 40px; 
+}
+
+p a {
+    color: #5f4b66; /* Color del enlace */
+    text-decoration: none; /* Elimina el subrayado del enlace */
+    font-weight: bold; /* Resalta el enlace */
+}
+
+p a:hover {
+    text-decoration: underline; /* Subrayado al pasar el cursor */
+}
+
+.form-group {
+    margin-bottom: 20px; /* Añadimos margen entre los campos */
+}
+
+label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: bold;
+    color: #5f4b66;
+}
+
+input {
+    width: 100%; /* Los inputs ocuparán el 100% del ancho de su contenedor */
+    padding: 12px;
+    margin-top: 6px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+/* Estilo para el enlace "Olvidaste tu contraseña?" */
+.forgot-password {
+    text-align:start; /* Centra el texto */
+    font-size: 16px; /* Tamaño de fuente */
+    color: #5f4b66; /* Color del texto */
+    display: block; /* Asegura que esté en una línea separada */
+    margin-top: 15px; /* Separación superior */
+    margin-bottom: 30px;
+}
+
+.forgot-password:hover {
+    text-decoration: underline; /* Subrayado al pasar el cursor */
+}
+
+
+button {
+    width: 60%; /* Ajustamos el ancho del botón al 60% */
+    padding: 15px;
+    background-color: #5f4b66; /* Color más oscuro para el botón */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 18px;
+    cursor: pointer;
+    margin: 0 auto; /* Centra el botón en su contenedor */
+    display: block; /* Necesario para que el margin auto funcione */
+}
+
+button:hover {
+    background-color: #46304b;
+}
+
+/* Alineación de los campos de Nombre y Apellido en la misma fila */
+.form-row1 {
+    display: flex; /* Usamos flexbox para la fila */
+    justify-content: space-between; /* Distribuir los campos equitativamente */
+}
+.form-row2 {
+    display: flex; /* Usamos flexbox para la fila */
+    justify-content: space-between; /* Distribuir los campos equitativamente */
+}
+
+.half-width {
+    width: 48%; /* Los campos tomarán el 48% del ancho */
+    margin-right: 4%; /* Espacio entre los campos */
+}
+
+.half-width:last-child {
+    margin-right: 0; /* El último campo no tendrá margen derecho */
+}
+
+/* Estilo para el checkbox */
+.form-group input[type="checkbox"] {
+    width: auto; /* Asegura que el checkbox no ocupe todo el ancho */
+    margin-right: 10px; /* Espacio entre el checkbox y el texto */
+    vertical-align: middle; /* Alinea verticalmente el checkbox con el texto */
+}
+
+/* Aseguramos que el checkbox y el texto estén alineados a la izquierda */
+.form-group label {
+    display: inline-flex;
+    align-items: center; /* Alinea verticalmente el texto con el checkbox */
+    margin-left: 0; /* Elimina cualquier margen que pueda haber sido añadido */
+    justify-content: flex-start; /* Asegura que ambos elementos se alineen a la izquierda */
+}
+
+
+/* Imagen a la derecha */
+.image-container {
+    width: 66.6%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #ececec;
+}
+
+.image-container img {
+    max-width: 90%;
+    height: auto;
+    border-radius: 10px;
+}
+
+/* Estilo de las secciones */
+#video{
+    margin-bottom: 20px;
+}
+#register-section,
+#gesture-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* Video y botones de grabación */
+#gesture-section video {
+    display: block;
+    margin-top: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    width: 100%;
+    height: auto;
+}
+
+/* Estilo para los botones */
+#start-recording, #stop-recording, #enviar-registro {
+    width: 100%;
+    padding: 15px;
+    background-color: #5f4b66;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 18px;
+    cursor: pointer;
+    margin-top: 15px; /* Espacio entre los botones */
+}
+
+/* Espacio de 40px entre los botones */
+#enviar-registro {
+    margin-top: 20px; /* Espacio de 40px debajo del botón "Iniciar Grabación" */
+}
+
+#start-recording:hover, #stop-recording:hover, #enviar-registro:hover {
+    background-color: #46304b;
+}

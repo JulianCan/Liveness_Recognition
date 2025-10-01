@@ -1,0 +1,210 @@
+/* Reset de estilos */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f9e4e4;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh; /* Asegura que el body ocupe toda la pantalla */
+}
+
+/* Estilo del header y la barra de navegación */
+header {
+    background-color: #fff;
+    padding: 20px;
+    display: flex;
+    justify-content:center;
+    align-items: center;
+    text-align: center;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+}
+
+nav .logo h1 {
+    font-size: 24px;
+    padding-left: 150px;
+    color: #333;
+}
+
+.nav-links {
+    list-style: none;
+    display: flex;
+    margin-left: 120px; /* Para alinear los enlaces a la derecha */
+    margin-right: auto;
+}
+
+.nav-links li {
+    margin-right: 30px; /* Espaciado entre los enlaces */
+}
+
+.nav-links li a {
+    text-decoration: none;
+    color: #333;
+    font-size: 16px;
+    font-weight: 500;
+    transition: color 0.3s ease;
+}
+
+.nav-links li a:hover {
+    color: #007BFF; /* Cambia el color al pasar el ratón */
+}
+
+.user-icons{
+    display: flex;
+    align-items: center;
+    justify-content: center; /* Alinea los iconos al centro */
+    margin-left: 20px; /* Asegura que los iconos estén alejados del contenido principal */
+    color: #777;
+}
+
+.user-icons span {
+    margin: 0 10px;
+    font-size: 24px; /* Aumentamos el tamaño de los iconos */
+    cursor: pointer;
+}
+
+.user-icons .profile-icon{
+    align-items: center;
+    font-size: 40px;
+    margin-left: 25px;
+    margin-right: 30px;
+}
+
+.user-icons :hover{
+    color: #333;
+}
+
+/* Main content */
+.main-content {
+    margin: 50px 200px;
+    flex-grow: 1; /* Permite que ocupe el espacio disponible */
+    text-align: left;
+}
+
+
+.main-content h2 {
+    font-size: 28px;
+    margin-bottom: 20px;
+}
+
+.filter {
+    margin-bottom: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+.filter label {
+    margin-right: 10px;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.filter input {
+    padding: 10px;
+    width: 300px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+/* Cursos grid */
+.courses-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+}
+
+/* Cursos grid */
+.courses-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+}
+
+/* Enlazamos las tarjetas para hacerlas clickeables */
+.course-card {
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Sombra inicial */
+    text-align: center;
+    height: 350px;
+    display: block; /* Asegura que el enlace ocupe toda la tarjeta */
+    text-decoration: none; /* Elimina el subrayado */
+    color: inherit; /* Hereda el color del texto */
+    transition: transform 0.3s ease, box-shadow 0.3s ease; /* Transición suave para el hover */
+}
+
+/* Para las imágenes dentro de las tarjetas */
+.image-container {
+    height: 200px;
+    width: 100%;
+}
+
+.course-card h3 {
+    font-size: 22px;
+    margin-bottom: 10px;
+    text-align: left;
+}
+
+.course-card p {
+    font-size: 16px;
+    color: #777;
+    text-align: left;
+}
+
+/* Efecto de hover */
+.course-card:hover {
+    transform: scale(1.05); /* Aumenta el tamaño de la tarjeta */
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Sombra más grande */
+    cursor: pointer; /* Cambia el cursor para indicar que es clickeable */
+}
+
+/* Footer */
+.footer {
+    display: flex;
+    padding: 30px 20px;
+    background-color: #4e3b53;
+    color: white;
+    margin-top: auto; /* Hace que el footer esté siempre al final */
+    width: 100%;
+    justify-content: center; /* Centra los tres elementos */
+    gap: 150px; /* Espaciado entre los items */
+}
+
+.footer-item {
+    text-align: center; /* Alinea el texto dentro de cada item */
+}
+
+.footer-item h4 {
+    font-size: 18px;
+    margin-bottom: 15px;
+}
+
+.footer-item ul {
+    list-style: none;
+}
+
+.footer-item ul li {
+    margin: 5px 0;
+}
+
+.footer-item ul li a {
+    color: white;
+    text-decoration: none;
+}
+
+.footer-item ul li a:hover {
+    text-decoration: underline;
+}

@@ -3,6 +3,7 @@ node_modules/
 
 # Ignorar variables de entorno
 .env
+/BACK/.env
 
 # Ignorar logs
 npm-debug.log

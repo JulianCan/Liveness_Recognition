@@ -11,4 +11,4 @@ async function verifyFace(imageUrl) {
 }
 
 // Llamada de ejemplo:
-verifyFace('https://example.com/path/to/image.jpg');
+verifyFace('https://previews.123rf.com/images/warrengoldswain/warrengoldswain1610/warrengoldswain161000017/64945843-full-collection-of-real-funny-faces-people-making-silly-expressions.jpg');

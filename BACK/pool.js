@@ -9,6 +9,10 @@ dotenv.config({ path: __dirname + '/.env' });
 console.log('Connecting with user:', process.env.PG_USER);
 console.log('Connecting with password:', typeof process.env.PG_PASSWORD, process.env.PG_PASSWORD);
 
+// Verificar las variables de Azure (solo para depuración)
+console.log('Azure Face API Key:', process.env.FACE_APIKEY);
+console.log('Azure Face Endpoint:', process.env.FACE_ENDPOINT);
+
 // Crear pool de conexiones PostgreSQL
 const pool = new Pool({
   user: process.env.PG_USER,

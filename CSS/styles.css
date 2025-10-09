@@ -14,34 +14,57 @@ body {
 
 /* ===== Encabezado ===== */
 header {
-  background: #20232a;
-  color: #fff;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 15px 40px;
+    background-color: #20232a;
+    padding: 20px;
+    display: flex;
+    justify-content:center;
+    align-items: center;
+    text-align: center;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-header .logo h1 {
-  font-size: 20px;
-  color: #61dafb; /* Azul llamativo */
+nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
 }
 
-nav ul {
-  list-style: none;
-  display: flex;
-  gap: 20px;
+nav .logo h1 {
+    font-size: 24px;
+    padding-left: 150px;
+    color: #61dafb;
 }
 
-nav ul li a {
-  color: #fff;
+.nav-links {
+    list-style: none;
+    display: flex;
+    margin-left: auto;
+    margin-right: auto;
+    gap: 30px;
+}
+
+.nav-links li a {
+    text-decoration: none;
+    color: #fff9f9;
+    font-size: 16px;
+    font-weight: 500;
+    transition: color 0.3s ease;
+}
+
+.nav-links li a:hover {
+    color: #007BFF; /* Cambia el color al pasar el ratón */
+  }
+
+.btn-login{
+  background: #61dafb;
+  color: #20232a;
+  margin-right: 150px;
+  padding: 10px 20px;
+  border-radius: 5px;
   text-decoration: none;
-  font-size: 14px;
+  font-weight: bold;
   transition: 0.3s;
-}
-
-nav ul li a:hover {
-  color: #61dafb;
 }
 
 /* ===== Hero / Banner ===== */
@@ -71,7 +94,7 @@ nav ul li a:hover {
   margin-bottom: 20px;
 }
 
-.btn {
+.btn{
   background: #61dafb;
   color: #20232a;
   padding: 10px 20px;
@@ -115,6 +138,95 @@ nav ul li a:hover {
 .benefit-item h3 {
   color: #20232a;
   margin-bottom: 10px;
+}
+
+/* Estilos para la sección Quiénes Somos */
+.about-us {
+  padding: 60px 20px;
+  background-color: #f9f9f9; /* Un color de fondo ligeramente diferente */
+  text-align: center;
+}
+
+.about-us .container, .faq .container {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.about-us h2, .faq h2 {
+  font-size: 32px;
+  margin-bottom: 20px;
+  color: #333;
+}
+
+.about-us p {
+  font-size: 18px;
+  line-height: 1.6;
+  color: #666;
+}
+
+/* Estilos para la sección FAQ y el Acordeón */
+.faq {
+  padding: 60px 20px;
+  background-color: #fff;
+}
+
+.accordion {
+  width: 100%;
+  margin-top: 30px;
+}
+
+.accordion-item {
+  border-bottom: 1px solid #20232a;
+}
+
+.accordion-btn {
+  width: 100%;
+  background-color: transparent;
+  border: none;
+  text-align: left;
+  padding: 18px 20px;
+  font-size: 18px;
+  font-weight: 600;
+  color: #20232a;
+  cursor: pointer;
+  outline: none;
+  transition: background-color 0.3s ease;
+  position: relative;
+}
+
+.accordion-btn:hover {
+  background-color: #20232a49;
+}
+
+.accordion-btn::after {
+  content: '+';
+  font-size: 24px;
+  color: #20232a;
+  position: absolute;
+  right: 20px;
+  top: 50%;
+  transform: translateY(-50%);
+  transition: transform 0.3s ease;
+}
+
+.accordion-btn.active::after {
+  content: '−';
+  transform: translateY(-50%) rotate(180deg);
+}
+
+.accordion-content {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease-out;
+  background-color: #fff;
+}
+
+.accordion-content p {
+  padding: 20px;
+  font-size: 16px;
+  line-height: 1.5;
+  color: #555;
+  border-top: 1px solid #eee;
 }
 
 /* ===== Footer ===== */

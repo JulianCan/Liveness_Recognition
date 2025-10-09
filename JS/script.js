@@ -83,7 +83,7 @@ async function redirectToConfirmation() {
         body: JSON.stringify({
             name: nombre,
             email: email,
-            password_hash: password, // Puedes agregar un hash aquí si lo deseas
+            password: password, // Puedes agregar un hash aquí si lo deseas
             role: 'student' // Asignar un rol por defecto
         })
     });

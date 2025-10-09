@@ -47,9 +47,9 @@ router.get("/:id", async (req, res) => {
 // POST /api/users  {name, email, password_hash, role}
 router.post("/add", async (req, res) => {  // Aquí debe coincidir "add"
   try {
-    const { name, email, password_hash, role } = req.body;
+    const { name, email, password, role } = req.body;
 
-    if (!name || !email || !password_hash) {
+    if (!name || !email || !password) {
       return res.status(400).json({ error: "name, email y password_hash son obligatorios" });
     }
 
@@ -65,7 +65,7 @@ router.post("/add", async (req, res) => {  // Aquí debe coincidir "add"
       `INSERT INTO users (name, email, password_hash, role)
        VALUES ($1, $2, $3, COALESCE($4,'student'))
        RETURNING id, name, email, role, created_at`,
-      [name, email, password_hash, role]
+      [name, email, hashedPassword, role]
     );
     res.status(201).json(insert.rows[0]);
   } catch (e) {

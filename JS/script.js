@@ -96,3 +96,38 @@ async function redirectToConfirmation() {
         alert('Error al registrar el usuario: ' + data.error);
     }
 }
+
+// Función para manejar el login
+async function redirectToCourses() {
+    const email = document.getElementById('email').value;
+    const password = document.getElementById('password').value;
+
+    // Validación de campos vacíos
+    if (!email || !password) {
+        alert('Por favor, ingresa tu correo y contraseña.');
+        return;
+    }
+
+    // Enviar los datos al back-end
+    const response = await fetch('http://localhost:5000/api/users/login', {  // Cambia la ruta si es necesario
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            email: email,
+            password: password
+        })
+    });
+
+    const data = await response.json();
+
+    if (response.ok) {
+        // Si el login es exitoso, redirige a la página de cursos
+        console.log('Usuario logueado', data);
+        window.location.href = "cursos.html";  // Redirige a la página de cursos
+    } else {
+        // Si el login falla, muestra el error
+        alert('Error al iniciar sesión: ' + data.error);
+    }
+}

@@ -155,5 +155,23 @@
             </ul>
         </div>
     </footer>
+
+    <script>
+        function toggleModule(moduleNumber) {
+            // Obtiene el contenido del módulo que se ha clickeado
+            const currentContent = document.getElementById('module-' + moduleNumber);
+
+            // Cierra todos los demás módulos abiertos
+            const allModules = document.querySelectorAll('.module-content');
+            allModules.forEach(module => {
+                if (module.id !== currentContent.id) {
+                    module.style.display = 'none';
+                }
+            });
+
+            // Alterna la visibilidad (abrir/cerrar) del módulo actual
+            currentContent.style.display = currentContent.style.display === 'block' ? 'none' : 'block';
+        }
+    </script>
 </body>
 </html>

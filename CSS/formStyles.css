@@ -26,10 +26,9 @@ body {
 
 /* Sección del formulario */
 .form-section {
-    width: 33.3%; /* Ajustamos el ancho del formulario */
+    width: 33.4%; /* Ajustamos el ancho del formulario */
     padding: 40px;
     background-color: #fff;
-    border-radius: 8px;
     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
 }
 

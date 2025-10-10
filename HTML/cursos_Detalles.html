@@ -14,7 +14,7 @@
                 <h1>SOLUTION <br>TECH</h1>
             </div>
             <ul class="nav-links">
-                <li><a href="#">Cursos</a></li>
+                <li><a href="cursos.html">Cursos</a></li>
                 <li><a href="#">Mis Cursos</a></li>
                 <li><a href="#">Área Personal</a></li>
             </ul>
@@ -31,19 +31,19 @@
         <!-- Sección Hero -->
         <section class="hero">
             <div class="hero-text">
-                <h1>TITULO</h1>
-                <p>Tipo de Programa</p>
+                <h1 id="course-title">TITULO</h1>
+                <p id="course-type">Tipo de Programa</p>
                 <button>Inscríbete Ya</button>
             </div>
             <div class="hero-image">
-                <img src="image.jpg" alt="Imagen del curso">
+                <img id="course-image" src="image.jpg" alt="Imagen del curso">
             </div>
         </section>
 
         <!-- Descripción del curso -->
         <section class="course-description">
             <h2>Descripción del curso</h2>
-            <p>
+            <p id="course-description">
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
             </p>
         </section>
@@ -98,7 +98,7 @@
             </div>
         </section>
 
-    <!-- Recomendados -->
+    <!-- Recomendados-->
     <section class="recommended-courses">
         <h2>Recomendados</h2>
         <div class="recommended-courses-grid">
@@ -155,8 +155,34 @@
             </ul>
         </div>
     </footer>
-
     <script>
+        // Función para obtener el ID del curso de la URL
+        function getCourseIdFromURL() {
+            const urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get('id');
+        }
+
+        // Obtener los detalles del curso desde el servidor
+        async function fetchCourseDetails() {
+            const courseId = getCourseIdFromURL();
+            const response = await fetch(`http://localhost:5000/api/courses/${courseId}`);
+            const data = await response.json();
+
+            if (response.ok) {
+                // Actualizar los datos de la página con la información del curso
+                document.getElementById('course-title').innerText = data.title;
+                document.getElementById('course-description').innerText = data.description || "Descripción no disponible";
+                document.getElementById('course-image').src = data.cover_url || 'default-image.jpg';  // Imagen por defecto si no se tiene URL
+            } else {
+                alert('Curso no encontrado');
+            }
+        }
+
+        // Llamar a la función para cargar los datos al cargar la página
+        fetchCourseDetails();
+    </script>
+    <script>
+        
         function toggleModule(moduleNumber) {
             // Obtiene el contenido del módulo que se ha clickeado
             const currentContent = document.getElementById('module-' + moduleNumber);

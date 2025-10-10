@@ -11,7 +11,7 @@ router.get("/", async (req, res) => {
   try {
     const { rows } = await pool.query(
       `SELECT c.id, c.title, c.slug, c.status, c.created_at,
-              c.description, c.cover_url  -- Incluye estos campos correctamente
+              c.description, c.long_Description, c.cover_url  -- Asegúrate de que el nombre sea correcto
        FROM courses c
        JOIN users u ON u.id = c.owner_id
        ORDER BY c.id
@@ -28,13 +28,14 @@ router.get("/", async (req, res) => {
 });
 
 
+
 // GET /api/courses/:id
 router.get("/:id", async (req, res) => {
   try {
-    const { rows } = await pool.query(
-      `SELECT id, owner_id, title, slug, description, cover_url, status, created_at
-       FROM courses WHERE id = $1`, [req.params.id]
-    );
+  const { rows } = await pool.query(
+    `SELECT id, owner_id, title, slug, description, long_Description, cover_url, status, created_at
+      FROM courses WHERE id = $1`, [req.params.id]
+  );
     if (!rows.length) return res.status(404).json({ error: "Curso no encontrado" });
     res.json(rows[0]);
   } catch (e) {

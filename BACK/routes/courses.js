@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 const { pool } = require("../pool");
 
-// GET /api/courses?page=&limit=
+// GET /api/courses
 router.get("/", async (req, res) => {
   const page = Math.max(parseInt(req.query.page || "1", 10), 1);
   const limit = Math.min(Math.max(parseInt(req.query.limit || "50", 10), 1), 100);
@@ -11,18 +11,22 @@ router.get("/", async (req, res) => {
   try {
     const { rows } = await pool.query(
       `SELECT c.id, c.title, c.slug, c.status, c.created_at,
-              u.id AS owner_id, u.name AS owner_name, u.email AS owner_email
+              c.description, c.cover_url  -- Incluye estos campos correctamente
        FROM courses c
        JOIN users u ON u.id = c.owner_id
        ORDER BY c.id
        LIMIT $1 OFFSET $2`, [limit, offset]
     );
-    res.json({ page, limit, data: rows });
+
+    console.log(rows);  // Verifica que los datos sean correctos
+
+    res.json({ page, limit, data: rows });  // Asegúrate de enviar la respuesta correctamente
   } catch (e) {
     console.error(e);
     res.status(500).json({ error: "Error al listar cursos" });
   }
 });
+
 
 // GET /api/courses/:id
 router.get("/:id", async (req, res) => {

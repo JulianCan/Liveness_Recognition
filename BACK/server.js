@@ -1,6 +1,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const dotenv = require('dotenv');
+const cors = require('cors');
 const { connectDB } = require('./pool'); // Import PostgreSQL connection
 const userRoutes = require('./routes/users'); // Import your user routes (add others similarly)
 const profilesRouter = require("./routes/profiles");
@@ -25,6 +26,9 @@ const app = express();
 
 // Middleware to parse incoming request bodies
 app.use(bodyParser.json());
+
+// Add CORS middleware
+app.use(cors());  // Esto habilita CORS para todas las rutas
 
 // Connect to PostgreSQL
 connectDB();

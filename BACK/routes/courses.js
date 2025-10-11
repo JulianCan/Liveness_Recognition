@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 const { pool } = require("../pool");
 
-// GET /api/courses?page=&limit=
+// GET /api/courses
 router.get("/", async (req, res) => {
   const page = Math.max(parseInt(req.query.page || "1", 10), 1);
   const limit = Math.min(Math.max(parseInt(req.query.limit || "50", 10), 1), 100);
@@ -11,26 +11,31 @@ router.get("/", async (req, res) => {
   try {
     const { rows } = await pool.query(
       `SELECT c.id, c.title, c.slug, c.status, c.created_at,
-              u.id AS owner_id, u.name AS owner_name, u.email AS owner_email
+              c.description, c.cover_url  -- Asegúrate de que el nombre sea correcto
        FROM courses c
        JOIN users u ON u.id = c.owner_id
        ORDER BY c.id
        LIMIT $1 OFFSET $2`, [limit, offset]
     );
-    res.json({ page, limit, data: rows });
+
+    console.log(rows);  // Verifica que los datos sean correctos
+
+    res.json({ page, limit, data: rows });  // Asegúrate de enviar la respuesta correctamente
   } catch (e) {
     console.error(e);
     res.status(500).json({ error: "Error al listar cursos" });
   }
 });
 
+
+
 // GET /api/courses/:id
 router.get("/:id", async (req, res) => {
   try {
-    const { rows } = await pool.query(
-      `SELECT id, owner_id, title, slug, description, cover_url, status, created_at
-       FROM courses WHERE id = $1`, [req.params.id]
-    );
+  const { rows } = await pool.query(
+    `SELECT id, owner_id, title, slug, description, cover_url, status, created_at
+      FROM courses WHERE id = $1`, [req.params.id]
+  );
     if (!rows.length) return res.status(404).json({ error: "Curso no encontrado" });
     res.json(rows[0]);
   } catch (e) {
@@ -38,6 +43,26 @@ router.get("/:id", async (req, res) => {
     res.status(500).json({ error: "Error al obtener curso" });
   }
 });
+
+// GET /api/courses/recommended/:id  -> Cursos recomendados (excluye el curso actual)
+router.get("/recommended/:id", async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { rows } = await pool.query(
+      `SELECT c.id, c.title, c.slug, c.status, c.created_at,
+              c.description, c.cover_url
+       FROM courses c
+       WHERE c.id != $1  -- Excluir el curso actual
+       ORDER BY c.created_at DESC
+       LIMIT 4`, [id]  // Limitamos a 4 cursos recomendados
+    );
+    res.json(rows);
+  } catch (e) {
+    console.error(e);
+    res.status(500).json({ error: "Error al obtener cursos recomendados" });
+  }
+});
+
 
 // POST /api/courses
 // body: { owner_id, title, slug, description, cover_url, status }

@@ -59,12 +59,75 @@ registerButton.addEventListener('click', () => {
 });
 
 // Redirigir al hacer clic en "Enviar Registro"
-function redirectToConfirmation() {
-    // Simula que el registro se guardó y redirige a la página de confirmación
-    window.location.href = "cursos.html"; // Aquí puedes cambiar a la URL que desees
+async function redirectToConfirmation() {
+    const nombre = document.getElementById('nombre').value;
+    const apellido = document.getElementById('apellido').value;
+    const institucion = document.getElementById('institucion').value;
+    const telefono = document.getElementById('telefono').value;
+    const email = document.getElementById('email').value;
+    const password = document.getElementById('password').value;
+    const confirmPassword = document.getElementById('confirm-password').value;
+
+    // Validar la contraseña
+    if (password !== confirmPassword) {
+        alert('Las contraseñas no coinciden');
+        return;
+    }
+
+    // Enviar datos al back-end
+    const response = await fetch('http://localhost:5000/api/users/add', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            name: nombre,
+            email: email,
+            password: password, // Puedes agregar un hash aquí si lo deseas
+            role: 'student' // Asignar un rol por defecto
+        })
+    });
+
+    const data = await response.json();
+    if (response.ok) {
+        console.log('Usuario registrado', data);
+        window.location.href = "cursos.html";  // Redirige a la página de cursos después del registro
+    } else {
+        alert('Error al registrar el usuario: ' + data.error);
+    }
 }
 
-function redirectToCourses() {
-    // Redirige al usuario a la página cursos.html al hacer clic en "Iniciar Sesión"
-    window.location.href = "cursos.html";  // Cambia "cursos.html" si es necesario
+// Función para manejar el login
+async function redirectToCourses() {
+    const email = document.getElementById('email').value;
+    const password = document.getElementById('password').value;
+
+    // Validación de campos vacíos
+    if (!email || !password) {
+        alert('Por favor, ingresa tu correo y contraseña.');
+        return;
+    }
+
+    // Enviar los datos al back-end
+    const response = await fetch('http://localhost:5000/api/users/login', {  // Cambia la ruta si es necesario
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            email: email,
+            password: password
+        })
+    });
+
+    const data = await response.json();
+
+    if (response.ok) {
+        // Si el login es exitoso, redirige a la página de cursos
+        console.log('Usuario logueado', data);
+        window.location.href = "cursos.html";  // Redirige a la página de cursos
+    } else {
+        // Si el login falla, muestra el error
+        alert('Error al iniciar sesión: ' + data.error);
+    }
 }

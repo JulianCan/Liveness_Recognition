@@ -14,9 +14,9 @@
                 <h1>SOLUTION <br>TECH</h1>
             </div>
             <ul class="nav-links">
-                <li><a href="#">Cursos</a></li>
-                <li><a href="#">Mis Cursos</a></li>
-                <li><a href="#">Área Personal</a></li>
+                <li><a href="cursos.html">Cursos</a></li>
+                <li><a href="panel_Usuario.html">Mis Cursos</a></li>
+                <li><a href="Perfil.html">Área Personal</a></li>
             </ul>
             <div class="user-icons">
                 <span class="material-icons">notifications</span> <!-- Notificaciones -->
@@ -31,19 +31,19 @@
         <!-- Sección Hero -->
         <section class="hero">
             <div class="hero-text">
-                <h1>TITULO</h1>
-                <p>Tipo de Programa</p>
-                <button>Inscríbete Ya</button>
+                <h1 id="course-title">TITULO</h1>
+                <p id="course-type">Tipo de Programa</p>
+                <button id="enroll-button">Inscríbete Ya</button>
             </div>
             <div class="hero-image">
-                <img src="image.jpg" alt="Imagen del curso">
+                <img id="course-image" src="image.jpg" alt="Imagen del curso">
             </div>
         </section>
 
         <!-- Descripción del curso -->
         <section class="course-description">
             <h2>Descripción del curso</h2>
-            <p>
+            <p id="course-description">
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
             </p>
         </section>
@@ -52,36 +52,7 @@
         <section class="course-modules-instructors">
             <div class="modules-section">
                 <h2>Módulos</h2>
-                <div class="module-card">
-                    <button class="module-title" onclick="toggleModule(1)">Módulo 1</button>
-                    <div class="module-content" id="module-1">
-                        <p>Módulo 1 - 2 horas para finalizar</p>
-                    </div>
-                </div>
-                <div class="module-card">
-                    <button class="module-title" onclick="toggleModule(2)">Módulo 2</button>
-                    <div class="module-content" id="module-2">
-                        <p>Módulo 2 - 2 horas para finalizar</p>
-                    </div>
-                </div>
-                <div class="module-card">
-                    <button class="module-title" onclick="toggleModule(3)">Módulo 3</button>
-                    <div class="module-content" id="module-3">
-                        <p>Módulo 3 - 2 horas para finalizar</p>
-                    </div>
-                </div>
-                <div class="module-card">
-                    <button class="module-title" onclick="toggleModule(4)">Módulo 4</button>
-                    <div class="module-content" id="module-4">
-                        <p>Módulo 4 - 2 horas para finalizar</p>
-                    </div>
-                </div>
-                <div class="module-card">
-                    <button class="module-title" onclick="toggleModule(5)">Módulo 5</button>
-                    <div class="module-content" id="module-5">
-                        <p>Módulo 5 - 2 horas para finalizar</p>
-                    </div>
-                </div>
+                <div id="modules-container"><!-- aquí se inyectan los módulos --></div>
             </div>
 
             <!-- Información del Instructor -->
@@ -98,30 +69,11 @@
             </div>
         </section>
 
-    <!-- Recomendados -->
+    <!-- Recomendados-->
     <section class="recommended-courses">
         <h2>Recomendados</h2>
-        <div class="recommended-courses-grid">
-            <div class="recommended-card">
-                <img src="image1.jpg" alt="Imagen del curso recomendado 1">
-                <h3>Curso Recomendado 1</h3>
-                <p>Breve descripción del curso.</p>
-            </div>
-            <div class="recommended-card">
-                <img src="image2.jpg" alt="Imagen del curso recomendado 2">
-                <h3>Curso Recomendado 2</h3>
-                <p>Breve descripción del curso.</p>
-            </div>
-            <div class="recommended-card">
-                <img src="image3.jpg" alt="Imagen del curso recomendado 3">
-                <h3>Curso Recomendado 3</h3>
-                <p>Breve descripción del curso.</p>
-            </div>
-            <div class="recommended-card">
-                <img src="image4.jpg" alt="Imagen del curso recomendado 4">
-                <h3>Curso Recomendado 4</h3>
-                <p>Breve descripción del curso.</p>
-            </div>
+        <div class="recommended-courses-grid" id="recommended-courses-container">
+            <!-- Aquí se inyectan los cursos recomendados -->
         </div>
     </section>
     </main>
@@ -155,5 +107,8 @@
             </ul>
         </div>
     </footer>
+
+    <script src="\JS\cursosDetalles.js"></script>
+
 </body>
 </html>

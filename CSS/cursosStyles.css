@@ -7,7 +7,7 @@
 
 body {
     font-family: Arial, sans-serif;
-    background-color: #f9e4e4;
+    background-color: #ececec;
     display: flex;
     flex-direction: column;
     min-height: 100vh; /* Asegura que el body ocupe toda la pantalla */
@@ -15,7 +15,7 @@ body {
 
 /* Estilo del header y la barra de navegación */
 header {
-    background-color: #fff;
+    background-color: #20232a;
     padding: 20px;
     display: flex;
     justify-content:center;
@@ -34,7 +34,7 @@ nav {
 nav .logo h1 {
     font-size: 24px;
     padding-left: 150px;
-    color: #333;
+    color: #61dafb;
 }
 
 .nav-links {
@@ -50,7 +50,7 @@ nav .logo h1 {
 
 .nav-links li a {
     text-decoration: none;
-    color: #333;
+    color: #fff9f9;
     font-size: 16px;
     font-weight: 500;
     transition: color 0.3s ease;
@@ -65,7 +65,7 @@ nav .logo h1 {
     align-items: center;
     justify-content: center; /* Alinea los iconos al centro */
     margin-left: 20px; /* Asegura que los iconos estén alejados del contenido principal */
-    color: #777;
+    color: #d5c9c9;
 }
 
 .user-icons span {
@@ -82,7 +82,7 @@ nav .logo h1 {
 }
 
 .user-icons :hover{
-    color: #333;
+    color: #ffffff;
 }
 
 /* Main content */
@@ -121,17 +121,9 @@ nav .logo h1 {
 /* Cursos grid */
 .courses-grid {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(4, minmax(350px, 1fr));
     gap: 20px;
 }
-
-/* Cursos grid */
-.courses-grid {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 20px;
-}
-
 /* Enlazamos las tarjetas para hacerlas clickeables */
 .course-card {
     background-color: white;
@@ -139,6 +131,7 @@ nav .logo h1 {
     border-radius: 8px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Sombra inicial */
     text-align: center;
+    width: 350px;
     height: 350px;
     display: block; /* Asegura que el enlace ocupe toda la tarjeta */
     text-decoration: none; /* Elimina el subrayado */
@@ -147,11 +140,16 @@ nav .logo h1 {
 }
 
 /* Para las imágenes dentro de las tarjetas */
-.image-container {
+.image-container{
     height: 200px;
     width: 100%;
+    margin-bottom: 10px;
 }
-
+.image-container img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
 .course-card h3 {
     font-size: 22px;
     margin-bottom: 10px;
@@ -162,6 +160,8 @@ nav .logo h1 {
     font-size: 16px;
     color: #777;
     text-align: left;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 /* Efecto de hover */
@@ -175,7 +175,7 @@ nav .logo h1 {
 .footer {
     display: flex;
     padding: 30px 20px;
-    background-color: #4e3b53;
+    background-color: #20232a;
     color: white;
     margin-top: auto; /* Hace que el footer esté siempre al final */
     width: 100%;

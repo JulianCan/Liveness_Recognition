@@ -1,3 +1,90 @@
+/* Reset de estilos */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #ececec;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh; /* Asegura que el body ocupe toda la pantalla */
+}
+
+/* Estilo del header y la barra de navegación */
+header {
+    background-color: #20232a;
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+}
+
+nav .logo h1 {
+    font-size: 24px;
+    padding-left: 150px;
+    color: #61dafb;
+}
+
+.nav-links {
+    list-style: none;
+    display: flex;
+    margin-left: 120px; /* Para alinear los enlaces a la derecha */
+    margin-right: auto;
+}
+
+.nav-links li {
+    margin-right: 30px; /* Espaciado entre los enlaces */
+}
+
+.nav-links li a {
+    text-decoration: none;
+    color: #fff9f9;
+    font-size: 16px;
+    font-weight: 500;
+    transition: color 0.3s ease;
+}
+
+.nav-links li a:hover {
+    color: #007BFF; /* Cambia el color al pasar el ratón */
+}
+
+.user-icons {
+    display: flex;
+    align-items: center;
+    justify-content: center; /* Alinea los iconos al centro */
+    margin-left: 20px; /* Asegura que los iconos estén alejados del contenido principal */
+    color: #d5c9c9;
+}
+
+.user-icons span {
+    margin: 0 10px;
+    font-size: 24px; /* Aumentamos el tamaño de los iconos */
+    cursor: pointer;
+}
+
+.user-icons .profile-icon {
+    align-items: center;
+    font-size: 40px;
+    margin-left: 25px;
+    margin-right: 30px;
+}
+
+.user-icons :hover {
+    color: #ffffff;
+}
+
 /* ===== Perfil de Usuario ===== */
 .perfil-container {
   display: flex;

@@ -18,6 +18,8 @@
   },
   "homepage": "https://github.com/JulianCan/Liveness_Recognition#readme",
   "dependencies": {
+    "axios": "^1.12.2",
+    "bcrypt": "^6.0.0",
     "cors": "^2.8.5",
     "dotenv": "^17.2.2",
     "express": "^5.1.0",

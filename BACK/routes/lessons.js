@@ -28,6 +28,21 @@ router.get("/:id", async (req, res) => {
   }
 });
 
+// GET lecciones por módulo
+router.get("/by-module/:moduleId", async (req, res) => {
+  try {
+    const { moduleId } = req.params;
+    const { rows } = await pool.query(
+      `SELECT * FROM lessons WHERE module_id = $1 ORDER BY position`,
+      [moduleId]
+    );
+    res.json(rows);
+  } catch (e) {
+    console.error(e);
+    res.status(500).json({ error: "Error al obtener lecciones del módulo" });
+  }
+});
+
 router.post("/add", async (req, res) => {
   const { module_id, title, content_html, video_url, position, is_exam_intro } = req.body;
   if (!module_id || !title) return res.status(400).json({ error: "module_id y title son obligatorios" });

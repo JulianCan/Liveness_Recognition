@@ -115,6 +115,13 @@ h3 {
     width: calc(25% - 15px); /* (20px * 3/4) = 15px */
     flex-grow: 0; /* Evita que las tarjetas crezcan para llenar el espacio */
     text-align: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease; /* Transición suave para el hover */
+}
+
+.course-card:hover {
+    transform: translateY(-5px); /* Eleva la tarjeta */
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Sombra más pronunciada */
+    cursor: pointer;
 }
 
 .course-card img {
@@ -131,6 +138,7 @@ h3 {
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+
 }
 
 .course-card p {
@@ -140,6 +148,11 @@ h3 {
     /* Limitar descripción a 2 líneas */
     overflow: hidden;
     text-overflow: ellipsis;
+}
+
+.course-card a {
+    text-decoration: none; /* Elimina el subrayado del enlace */
+    color: inherit; /* Hereda el color del texto del padre */
 }
 
 

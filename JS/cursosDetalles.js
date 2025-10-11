@@ -104,10 +104,14 @@ async function fetchAndRenderRecommendedCourses() {
 // Función para guardar el curso en el panel de usuario (localStorage)
 function saveCourseToPanel(course) {
   let savedCourses = JSON.parse(localStorage.getItem('savedCourses')) || [];
-  // Añadir el curso al array de cursos guardados
-  savedCourses.push(course);
-  localStorage.setItem('savedCourses', JSON.stringify(savedCourses));
+
+  // Verificar si el curso ya está guardado
+  if (!savedCourses.some(savedCourse => savedCourse.id === course.id)) {
+    savedCourses.push(course); // Añadir el curso si no existe
+    localStorage.setItem('savedCourses', JSON.stringify(savedCourses));
+  }
 }
+
 
 // Lógica para el botón "Inscríbete Ya"
 document.getElementById('enroll-button').addEventListener('click', async () => {
@@ -116,12 +120,31 @@ document.getElementById('enroll-button').addEventListener('click', async () => {
   const courseData = await resp.json();
 
   if (resp.ok) {
-    saveCourseToPanel(courseData); // Guardar el curso en localStorage
-    alert(`¡Te has inscrito en el curso: ${courseData.title}!`);
+    // Obtener los enrollments
+    const enrollResp = await fetch(`http://localhost:5000/api/enrollments/add`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        user_id: 13,  // Asegúrate de que esto obtenga el ID del usuario actual
+        course_id: courseData.id,
+        status: 'active',
+        progress_pct: 0
+      })
+    });
+
+    if (enrollResp.ok) {
+      saveCourseToPanel(courseData); // Guardar el curso en localStorage
+      alert(`¡Te has inscrito en el curso: ${courseData.title}!`);
+    } else {
+      alert('Error al inscribirse en el curso.');
+    }
   } else {
-    alert('Error al inscribirse en el curso.');
+    alert('Error al obtener los detalles del curso.');
   }
 });
+
 
 // Ejecutar todo al cargar la página
 (async () => {

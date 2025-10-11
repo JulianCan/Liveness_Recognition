@@ -8,14 +8,21 @@ document.addEventListener("DOMContentLoaded", function() {
     courseCard.className = 'course-card';
 
     // Modificar el enlace de la card para redirigir a contenidos.html
-    courseCard.innerHTML = `
+    /*courseCard.innerHTML = `
       <a href="contenidos.html?id=${course.id}">  <!-- Cambio aquí -->
         <img src="${course.cover_url}" alt="Curso" class="course-image">
         <h3>${course.title}</h3>
         <p>${course.description}</p>
       </a>
-    `;
+    `;*/
 
+    courseCard.innerHTML = `
+      <a href="pruebaHardcode.html?id=${course.id}">  <!-- Cambio aquí -->
+        <img src="${course.cover_url}" alt="Curso" class="course-image">
+        <h3>${course.title}</h3>
+        <p>${course.description}</p>
+      </a>
+    `;
     container.appendChild(courseCard);
   });
 });

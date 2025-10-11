@@ -24,9 +24,7 @@ async function fetchCourseDetails() {
 // Función para obtener y renderizar los módulos
 async function fetchAndRenderModules() {
   const courseId = getCourseIdFromURL();
-  // Usa la ruta que hayas implementado:
   const resp = await fetch(`http://localhost:5000/api/modules/by-course/${courseId}`);
-  // (alternativa con query: /api/modules?course_id=${courseId})
   const modules = await resp.json();
 
   const cont = document.getElementById('modules-container');
@@ -103,10 +101,33 @@ async function fetchAndRenderRecommendedCourses() {
   });
 }
 
+// Función para guardar el curso en el panel de usuario (localStorage)
+function saveCourseToPanel(course) {
+  let savedCourses = JSON.parse(localStorage.getItem('savedCourses')) || [];
+  // Añadir el curso al array de cursos guardados
+  savedCourses.push(course);
+  localStorage.setItem('savedCourses', JSON.stringify(savedCourses));
+}
+
+// Lógica para el botón "Inscríbete Ya"
+document.getElementById('enroll-button').addEventListener('click', async () => {
+  const courseId = getCourseIdFromURL();
+  const resp = await fetch(`http://localhost:5000/api/courses/${courseId}`);
+  const courseData = await resp.json();
+
+  if (resp.ok) {
+    saveCourseToPanel(courseData); // Guardar el curso en localStorage
+    alert(`¡Te has inscrito en el curso: ${courseData.title}!`);
+  } else {
+    alert('Error al inscribirse en el curso.');
+  }
+});
+
 // Ejecutar todo al cargar la página
 (async () => {
   await fetchCourseDetails();
   await fetchAndRenderModules();
   await fetchAndRenderRecommendedCourses();  // Cargar cursos recomendados
 })();
+
 

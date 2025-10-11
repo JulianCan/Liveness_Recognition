@@ -71,8 +71,42 @@ async function fetchAndRenderModules() {
   });
 }
 
+// === CURSOS RECOMENDADOS ===
+
+// Función para obtener y renderizar los cursos recomendados
+async function fetchAndRenderRecommendedCourses() {
+  const courseId = getCourseIdFromURL();
+  const resp = await fetch(`http://localhost:5000/api/courses/recommended/${courseId}`);
+  const recommendedCourses = await resp.json();
+
+  const cont = document.getElementById('recommended-courses-container');
+  cont.innerHTML = ""; // Limpiar contenedor de cursos recomendados
+
+  if (!resp.ok || !Array.isArray(recommendedCourses) || recommendedCourses.length === 0) {
+    cont.innerHTML = `<p>No hay cursos recomendados disponibles.</p>`;
+    return;
+  }
+
+  recommendedCourses.forEach(course => {
+    const card = document.createElement('div');
+    card.className = 'recommended-card';
+
+    card.innerHTML = `
+      <a href="cursos_Detalles.html?id=${course.id}">
+        <img src="${course.cover_url}" alt="Imagen del curso recomendado">
+        <h3>${course.title}</h3>
+        <p>${course.description || "Breve descripción del curso"}</p>
+      </a>
+    `;
+
+    cont.appendChild(card);
+  });
+}
+
 // Ejecutar todo al cargar la página
 (async () => {
   await fetchCourseDetails();
   await fetchAndRenderModules();
+  await fetchAndRenderRecommendedCourses();  // Cargar cursos recomendados
 })();
+

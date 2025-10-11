@@ -248,6 +248,9 @@ nav .logo h1 {
 .recommended-courses-grid {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
+    display: flex;
+    flex-wrap: wrap; /* Permite que los elementos pasen a la siguiente línea */
+    justify-content: flex-start; /* Alinea las tarjetas al inicio */
     gap: 20px;
 }
 
@@ -257,6 +260,15 @@ nav .logo h1 {
     border-radius: 8px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     text-align: center;
+    cursor: pointer; /* Cambiar el cursor a 'pointer' */
+    width: calc(25% - 15px); /* 25% para 4 columnas, restando el gap. (20px * 3/4) */
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Efecto hover para las tarjetas recomendadas */
+.recommended-card:hover {
+    transform: translateY(-5px); /* Mueve la tarjeta ligeramente hacia arriba */
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1); /* Agrega una sombra para darle un efecto de elevación */
 }
 
 .recommended-card img {
@@ -270,11 +282,24 @@ nav .logo h1 {
     font-size: 20px;
     margin-top: 10px;
     margin-bottom: 10px;
+    /* Para controlar el desbordamiento del título */
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .recommended-card p {
     font-size: 16px;
     color: #777;
+}
+
+.recommended-card a {
+    text-decoration: none;  /* Elimina el subrayado del enlace */
+    color: inherit; /* No cambia el color del enlace al ser clickeado */
+}
+
+.recommended-card a:visited {
+    color: inherit; /* Evita que el color cambie después de hacer clic */
 }
 
 footer {

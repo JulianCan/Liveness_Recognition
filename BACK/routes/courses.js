@@ -44,6 +44,26 @@ router.get("/:id", async (req, res) => {
   }
 });
 
+// GET /api/courses/recommended/:id  -> Cursos recomendados (excluye el curso actual)
+router.get("/recommended/:id", async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { rows } = await pool.query(
+      `SELECT c.id, c.title, c.slug, c.status, c.created_at,
+              c.description, c.cover_url
+       FROM courses c
+       WHERE c.id != $1  -- Excluir el curso actual
+       ORDER BY c.created_at DESC
+       LIMIT 4`, [id]  // Limitamos a 4 cursos recomendados
+    );
+    res.json(rows);
+  } catch (e) {
+    console.error(e);
+    res.status(500).json({ error: "Error al obtener cursos recomendados" });
+  }
+});
+
+
 // POST /api/courses
 // body: { owner_id, title, slug, description, cover_url, status }
 router.post("/add", async (req, res) => {

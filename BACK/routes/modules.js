@@ -28,14 +28,32 @@ router.get("/:id", async (req, res) => {
   }
 });
 
+// GET by courseId (to include 'duracion' in response)
+router.get("/by-course/:courseId", async (req, res) => {
+  try {
+    const { rows } = await pool.query(
+      `SELECT id, course_id, title, position, duracion 
+       FROM modules 
+       WHERE course_id = $1 
+       ORDER BY COALESCE(position, 9999), id`, 
+      [req.params.courseId]
+    );
+    res.json(rows);
+  } catch (e) {
+    console.error(e);
+    res.status(500).json({ error: "Error al listar módulos del curso" });
+  }
+});
+
+
 // CREATE
 router.post("/add", async (req, res) => {
-  const { course_id, title, position } = req.body;
-  if (!course_id || !title) return res.status(400).json({ error: "course_id y title son obligatorios" });
+  const { course_id, title, position, duracion } = req.body;  // Include 'duracion' here
+  if (!course_id || !title || !duracion) return res.status(400).json({ error: "course_id, title y duracion son obligatorios" });
   try {
     const q = await pool.query(
-      `INSERT INTO modules (course_id, title, position) VALUES ($1,$2,COALESCE($3,1)) RETURNING *`,
-      [course_id, title, position]
+      `INSERT INTO modules (course_id, title, position, duracion) VALUES ($1, $2, COALESCE($3, 1), $4) RETURNING *`,
+      [course_id, title, position, duracion]
     );
     res.status(201).json(q.rows[0]);
   } catch (e) {
@@ -48,7 +66,12 @@ router.post("/add", async (req, res) => {
 router.patch("/:id", async (req, res) => {
   try {
     const fields = []; const vals = [];
-    for (const k of ["course_id","title","position"]) if (k in req.body) { vals.push(req.body[k]); fields.push(`${k}=$${vals.length}`); }
+    for (const k of ["course_id", "title", "position", "duracion"]) {
+      if (k in req.body) {
+        vals.push(req.body[k]);
+        fields.push(`${k}=$${vals.length}`);
+      }
+    }
     if (!fields.length) return res.status(400).json({ error: "Nada para actualizar" });
     vals.push(req.params.id);
     const q = await pool.query(`UPDATE modules SET ${fields.join(", ")} WHERE id=$${vals.length} RETURNING *`, vals);

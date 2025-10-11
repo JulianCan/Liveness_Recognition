@@ -15,8 +15,8 @@
             </div>
             <ul class="nav-links">
                 <li><a href="cursos.html">Cursos</a></li>
-                <li><a href="#">Mis Cursos</a></li>
-                <li><a href="#">Área Personal</a></li>
+                <li><a href="panel_Usuario.html">Mis Cursos</a></li>
+                <li><a href="Perfil.html">Área Personal</a></li>
             </ul>
             <div class="user-icons">
                 <span class="material-icons">notifications</span> <!-- Notificaciones -->
@@ -52,36 +52,7 @@
         <section class="course-modules-instructors">
             <div class="modules-section">
                 <h2>Módulos</h2>
-                <div class="module-card">
-                    <button class="module-title" onclick="toggleModule(1)">Módulo 1</button>
-                    <div class="module-content" id="module-1">
-                        <p>Módulo 1 - 2 horas para finalizar</p>
-                    </div>
-                </div>
-                <div class="module-card">
-                    <button class="module-title" onclick="toggleModule(2)">Módulo 2</button>
-                    <div class="module-content" id="module-2">
-                        <p>Módulo 2 - 2 horas para finalizar</p>
-                    </div>
-                </div>
-                <div class="module-card">
-                    <button class="module-title" onclick="toggleModule(3)">Módulo 3</button>
-                    <div class="module-content" id="module-3">
-                        <p>Módulo 3 - 2 horas para finalizar</p>
-                    </div>
-                </div>
-                <div class="module-card">
-                    <button class="module-title" onclick="toggleModule(4)">Módulo 4</button>
-                    <div class="module-content" id="module-4">
-                        <p>Módulo 4 - 2 horas para finalizar</p>
-                    </div>
-                </div>
-                <div class="module-card">
-                    <button class="module-title" onclick="toggleModule(5)">Módulo 5</button>
-                    <div class="module-content" id="module-5">
-                        <p>Módulo 5 - 2 horas para finalizar</p>
-                    </div>
-                </div>
+                <div id="modules-container"><!-- aquí se inyectan los módulos --></div>
             </div>
 
             <!-- Información del Instructor -->
@@ -155,49 +126,8 @@
             </ul>
         </div>
     </footer>
-    <script>
-        // Función para obtener el ID del curso de la URL
-        function getCourseIdFromURL() {
-            const urlParams = new URLSearchParams(window.location.search);
-            return urlParams.get('id');
-        }
 
-        // Obtener los detalles del curso desde el servidor
-        async function fetchCourseDetails() {
-            const courseId = getCourseIdFromURL();
-            const response = await fetch(`http://localhost:5000/api/courses/${courseId}`);
-            const data = await response.json();
+    <script src="\JS\cursosDetalles.js"></script>
 
-            if (response.ok) {
-                // Actualizar los datos de la página con la información del curso
-                document.getElementById('course-title').innerText = data.title;
-                document.getElementById('course-description').innerText = data.description || "Descripción no disponible";
-                document.getElementById('course-image').src = data.cover_url || 'default-image.jpg';  // Imagen por defecto si no se tiene URL
-            } else {
-                alert('Curso no encontrado');
-            }
-        }
-
-        // Llamar a la función para cargar los datos al cargar la página
-        fetchCourseDetails();
-    </script>
-    <script>
-        
-        function toggleModule(moduleNumber) {
-            // Obtiene el contenido del módulo que se ha clickeado
-            const currentContent = document.getElementById('module-' + moduleNumber);
-
-            // Cierra todos los demás módulos abiertos
-            const allModules = document.querySelectorAll('.module-content');
-            allModules.forEach(module => {
-                if (module.id !== currentContent.id) {
-                    module.style.display = 'none';
-                }
-            });
-
-            // Alterna la visibilidad (abrir/cerrar) del módulo actual
-            currentContent.style.display = currentContent.style.display === 'block' ? 'none' : 'block';
-        }
-    </script>
 </body>
 </html>

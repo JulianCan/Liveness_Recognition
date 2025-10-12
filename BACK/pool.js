@@ -3,11 +3,19 @@
 const { Pool } = require('pg');
 const dotenv = require('dotenv');
 
+dotenv.config({ path: __dirname + '/.env' });
+
 const pool = new Pool({
 
   // USAR LA CADENA DE CONEXIÓN COMPLETA:
   connectionString: process.env.DATABASE_URL, 
-  
+  user: process.env.PG_USER,
+  host: process.env.PG_HOST,
+  database: process.env.PG_DATABASE,
+  password: process.env.PG_PASSWORD,
+  port: process.env.PG_PORT,
+  connectionString: process.env.DATABASE_URL,
+
   ssl: {
     // Esto es NECESARIO para que Vercel se conecte a Supabase
     rejectUnauthorized: false

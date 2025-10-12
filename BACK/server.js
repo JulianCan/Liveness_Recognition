@@ -1,6 +1,6 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-//const dotenv = require('dotenv');
+const dotenv = require('dotenv');
 const cors = require('cors');
 const { connectDB } = require('./pool'); // Import PostgreSQL connection
 const userRoutes = require('./routes/users'); // Import your user routes (add others similarly)
@@ -20,7 +20,7 @@ const answersRoutes = require('./routes/answers');
 const mediaRoutes = require('./routes/media');
 
 // Load environment variables
-//dotenv.config();
+dotenv.config();
 
 const app = express();
 

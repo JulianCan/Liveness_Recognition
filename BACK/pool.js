@@ -1,6 +1,7 @@
 // BACK/pool.js
 
 const { Pool } = require('pg');
+const dotenv = require('dotenv');
 
 const pool = new Pool({
 

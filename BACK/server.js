@@ -20,7 +20,7 @@ const answersRoutes = require('./routes/answers');
 const mediaRoutes = require('./routes/media');
 
 // Load environment variables
-dotenv.config();
+//dotenv.config();
 
 const app = express();
 

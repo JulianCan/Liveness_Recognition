@@ -50,6 +50,11 @@ app.use('/api/attempts', attemptsRoutes);
 app.use('/api/answers', answersRoutes);
 app.use('/api/media', mediaRoutes);
 
+// **AÑADIR ESTO:** Ruta básica para la raíz (/)
+app.get('/', (req, res) => {
+  res.json({ message: "Welcome to the Liveness Recognition API. Access your routes via /api/..." });
+});
+
 // Export the app for Vercel to use
 module.exports = app;
 

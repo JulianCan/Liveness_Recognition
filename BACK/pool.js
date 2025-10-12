@@ -1,42 +1,42 @@
-// pool.js
+// BACK/pool.js
 const { Pool } = require('pg');
-const dotenv = require('dotenv');
+// ⚠️ NO ES NECESARIO require('dotenv') NI dotenv.config() aquí, 
+// Vercel inyecta las variables automáticamente.
 
-// Cargar variables de entorno
-dotenv.config({ path: __dirname + '/.env' });
-
-// Mostrar variables críticas para debug (puedes comentar después)
-console.log('Connecting with user:', process.env.PG_USER);
-console.log('Connecting with password:', typeof process.env.PG_PASSWORD, process.env.PG_PASSWORD);
-
-// Verificar las variables de Azure (solo para depuración)
-console.log('Azure Face API Key:', process.env.FACE_APIKEY);
-console.log('Azure Face Endpoint:', process.env.FACE_ENDPOINT);
-
-// Crear pool de conexiones PostgreSQL
+// ----------------------------------------------------------------------
+// CONFIGURACIÓN DEL POOL DE CONEXIONES
+// Se usa process.env.DATABASE_URL (la URL completa) para la conexión.
+// ----------------------------------------------------------------------
 const pool = new Pool({
-  //user: process.env.PG_USER,
-  //host: process.env.PG_HOST,
-  //database: process.env.PG_DATABASE,
-  //password: process.env.PG_PASSWORD,
-  //port: process.env.PG_PORT,
-  connectionString: process.env.DATABASE_URL,
+  // Vercel leerá la variable de entorno DATABASE_URL (ej: postgresql://user:pass@host:port/db)
+  connectionString: process.env.DATABASE_URL, 
+  
+  // Configuración necesaria para conectar a bases de datos en la nube (como Supabase)
   ssl: {
-    rejectUnauthorized: false // Permite conectarse a Azure PostgreSQL sin certificados locales
+    rejectUnauthorized: false
   }
 });
 
-// Función para probar la conexión
+// ----------------------------------------------------------------------
+// FUNCIÓN PARA PROBAR LA CONEXIÓN Y DEPURAR
+// ----------------------------------------------------------------------
 const connectDB = async () => {
+  if (!process.env.DATABASE_URL) {
+    console.error('ERROR: La variable DATABASE_URL no está configurada en Vercel.');
+    // No salimos con process.exit() para que Vercel pueda terminar la solicitud
+    return;
+  }
+  
   try {
     const client = await pool.connect();
-    console.log('PostgreSQL Connected successfully!');
+    console.log('✅ PostgreSQL Connected successfully!');
     client.release(); // Liberar conexión al pool
   } catch (err) {
-    console.error('PostgreSQL Connection Error:', err);
-    process.exit(1); // Salir si falla la conexión
+    // Esto capturará el error ENOTFOUND o un error de credenciales/conexión
+    console.error('❌ PostgreSQL Connection Error:', err.message, err.code, err.hostname);
+    // Es recomendable NO usar process.exit(1) en el código de Vercel,
+    // ya que detiene el worker y Vercel te da un error menos claro.
   }
 };
 
-// Exportar el pool y la función de conexión
 module.exports = { pool, connectDB };

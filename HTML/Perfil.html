@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="../CSS/style_perfil.css">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"> <!-- Cargar Material Icons -->
+  <title>Perfil de Usuario</title>
+</head>
+<body>
+
+  <!-- ===== Header ===== -->
+  <header class="header">
+        <nav>
+            <div class="logo">
+                <h1>SOLUTION <br>TECH</h1>
+            </div>
+            <ul class="nav-links">
+                <li><a href="cursos.html">Cursos</a></li>
+                <li><a href="panel_Usuario.html">Mis Cursos</a></li>
+                <li><a href="Perfil.html">Área Personal</a></li>
+            </ul>
+            <div class="user-icons">
+                <!-- Usamos los iconos de Google Fonts -->
+                <span class="material-icons">notifications</span> <!-- Notificaciones -->
+                <span class="material-icons">chat</span> <!-- Chat -->
+                <span class="material-icons">email</span> <!-- Correo -->
+                <span class="material-icons profile-icon">account_circle</span> <!-- Perfil -->
+            </div>
+        </nav>
+    </header>
+
+  <!-- ===== Perfil ===== -->
+  <main class="perfil-container">
+    <div class="perfil-card">
+      <div class="foto-container">
+        <img src="../img/avatar.png" alt="Foto de perfil" class="perfil-foto" id="fotoPreview">
+        
+        <!-- Botón estilizado -->
+        <label for="uploadFoto" class="btn-upload">Subir foto</label>
+        <input type="file" id="uploadFoto" accept="image/*">
+      </div>
+
+      <h2>Juan Pérez</h2>
+      <p><strong>Email:</strong> juanperez@example.com</p>
+      <p><strong>Rol:</strong> Estudiante</p>
+      <p><strong>Miembro desde:</strong> Enero 2025</p>
+      <button class="btn">Editar Perfil</button>
+    </div>
+  </main>
+
+  <script>
+    // Vista previa de la imagen cargada
+    const uploadInput = document.getElementById("uploadFoto");
+    const fotoPreview = document.getElementById("fotoPreview");
+
+    uploadInput.addEventListener("change", (event) => {
+      const file = event.target.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = (e) => {
+          fotoPreview.src = e.target.result;
+        };
+        reader.readAsDataURL(file);
+      }
+    });
+  </script>
+
+</body>
+</html>

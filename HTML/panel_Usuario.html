@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="\CSS\panelUsuarioStyles.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"> <!-- Cargar Material Icons -->
+    <title>Panel de Usuario</title>
+</head>
+<body>
+    <header class="header">
+        <nav>
+            <div class="logo">
+                <h1>SOLUTION <br>TECH</h1>
+            </div>
+            <ul class="nav-links">
+                <li><a href="cursos.html">Cursos</a></li>
+                <li><a href="panel_Usuario.html">Mis Cursos</a></li>
+                <li><a href="Perfil.html">Área Personal</a></li>
+            </ul>
+            <div class="user-icons">
+                <!-- Usamos los iconos de Google Fonts -->
+                <span class="material-icons">notifications</span> <!-- Notificaciones -->
+                <span class="material-icons">chat</span> <!-- Chat -->
+                <span class="material-icons">email</span> <!-- Correo -->
+                <span class="material-icons profile-icon">account_circle</span> <!-- Perfil -->
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <h2>¡Bienvenido de nuevo, UserName! <br> ¿Listo para seguir aprendiendo hoy?</h2>
+
+        <!-- Sección Mis Cursos -->
+        <section class="Mis Cursos">
+            <h3>Mis Cursos</h3>
+            <div id="saved-courses-container">
+                <!-- Aquí se inyectan los cursos guardados -->
+            </div>
+        </section>
+    </main>
+    
+    <script src="\JS\panelUsuario.js"></script>
+</body>
+</html>

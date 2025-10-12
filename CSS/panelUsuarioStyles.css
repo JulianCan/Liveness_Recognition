@@ -1,0 +1,171 @@
+/* Reset de estilos */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #ececec;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh; /* Asegura que el body ocupe toda la pantalla */
+}
+
+/* Estilo del header y la barra de navegación */
+header {
+    background-color: #20232a;
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+}
+
+nav .logo h1 {
+    font-size: 24px;
+    padding-left: 150px;
+    color: #61dafb;
+}
+
+.nav-links {
+    list-style: none;
+    display: flex;
+    margin-left: 120px; /* Para alinear los enlaces a la derecha */
+    margin-right: auto;
+}
+
+.nav-links li {
+    margin-right: 30px; /* Espaciado entre los enlaces */
+}
+
+.nav-links li a {
+    text-decoration: none;
+    color: #fff9f9;
+    font-size: 16px;
+    font-weight: 500;
+    transition: color 0.3s ease;
+}
+
+.nav-links li a:hover {
+    color: #007BFF; /* Cambia el color al pasar el ratón */
+}
+
+.user-icons {
+    display: flex;
+    align-items: center;
+    justify-content: center; /* Alinea los iconos al centro */
+    margin-left: 20px; /* Asegura que los iconos estén alejados del contenido principal */
+    color: #d5c9c9;
+}
+
+.user-icons span {
+    margin: 0 10px;
+    font-size: 24px; /* Aumentamos el tamaño de los iconos */
+    cursor: pointer;
+}
+
+.user-icons .profile-icon {
+    align-items: center;
+    font-size: 40px;
+    margin-left: 25px;
+    margin-right: 30px;
+}
+
+.user-icons :hover {
+    color: #ffffff;
+}
+
+h2 {
+    font-size: 48px;
+    text-align: center;
+    margin-top: 60px;
+}
+
+h3 {
+    font-size: 40px;
+    margin: 80px 200px;
+}
+
+/* Contenedor para las tarjetas de cursos guardados */
+#saved-courses-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px; /* Espacio entre tarjetas */
+    padding: 0 200px; /* Mismo padding que el título h3 */
+    justify-content: flex-start; /* Alinea las tarjetas a la izquierda */
+}
+
+/* Estilo de las tarjetas de cursos en el panel de usuario */
+.course-card {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    /* Calculamos el ancho para 4 columnas, considerando el gap */
+    width: calc(25% - 15px); /* (20px * 3/4) = 15px */
+    flex-grow: 0; /* Evita que las tarjetas crezcan para llenar el espacio */
+    text-align: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease; /* Transición suave para el hover */
+}
+
+.course-card:hover {
+    transform: translateY(-5px); /* Eleva la tarjeta */
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Sombra más pronunciada */
+    cursor: pointer;
+}
+
+.course-card img {
+    width: 100%;
+    height: 150px;
+    object-fit: cover;
+    border-radius: 8px;
+}
+
+.course-card h3 {
+    font-size: 18px;
+    margin: 10px 0;
+    /* Truncar texto del título si es muy largo */
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+
+}
+
+.course-card p {
+    font-size: 14px;
+    color: #777;
+    margin-top: 5px;
+    /* Limitar descripción a 2 líneas */
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.course-card a {
+    text-decoration: none; /* Elimina el subrayado del enlace */
+    color: inherit; /* Hereda el color del texto del padre */
+}
+
+
+.progress-bar {
+    background-color: #e0e0e0;
+    border-radius: 8px;
+    margin-top: 15px;
+    height: 10px;
+    width: 100%;
+}
+
+.progress {
+    background-color: #4caf50;
+    height: 100%;
+    border-radius: 8px;
+}

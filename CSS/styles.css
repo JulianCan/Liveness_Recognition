@@ -1,3 +1,240 @@
-nav{
-    background-color: blueviolet;
+/* ===== Reset básico ===== */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Arial, sans-serif;
+}
+
+body {
+  background-color: #f4f6f9;
+  color: #333;
+  line-height: 1.6;
+}
+
+/* ===== Encabezado ===== */
+header {
+    background-color: #20232a;
+    padding: 20px;
+    display: flex;
+    justify-content:center;
+    align-items: center;
+    text-align: center;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+}
+
+nav .logo h1 {
+    font-size: 24px;
+    padding-left: 150px;
+    color: #61dafb;
+}
+
+.nav-links {
+    list-style: none;
+    display: flex;
+    margin-left: auto;
+    margin-right: auto;
+    gap: 30px;
+}
+
+.nav-links li a {
+    text-decoration: none;
+    color: #fff9f9;
+    font-size: 16px;
+    font-weight: 500;
+    transition: color 0.3s ease;
+}
+
+.nav-links li a:hover {
+    color: #007BFF; /* Cambia el color al pasar el ratón */
+  }
+
+.btn-login{
+  background: #61dafb;
+  color: #20232a;
+  margin-right: 150px;
+  padding: 10px 20px;
+  border-radius: 5px;
+  text-decoration: none;
+  font-weight: bold;
+  transition: 0.3s;
+}
+
+/* ===== Hero / Banner ===== */
+.hero {
+  background: url("https://picsum.photos/1200/500") no-repeat center center/cover;
+  height: 70vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  color: #fff;
+}
+
+.hero-content {
+  background: rgba(0, 0, 0, 0.6);
+  padding: 30px;
+  border-radius: 10px;
+}
+
+.hero h2 {
+  font-size: 32px;
+  margin-bottom: 15px;
+}
+
+.hero p {
+  font-size: 16px;
+  margin-bottom: 20px;
+}
+
+.btn{
+  background: #61dafb;
+  color: #20232a;
+  padding: 10px 20px;
+  border-radius: 5px;
+  text-decoration: none;
+  font-weight: bold;
+  transition: 0.3s;
+}
+
+.btn:hover {
+  background: #21a1f1;
+  color: #fff;
+}
+
+/* ===== Sección de beneficios ===== */
+.benefits {
+  padding: 50px 20px;
+  text-align: center;
+}
+
+.benefits h2 {
+  font-size: 26px;
+  margin-bottom: 30px;
+}
+
+.benefit-list {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.benefit-item {
+  background: #fff;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  width: 250px;
+}
+
+.benefit-item h3 {
+  color: #20232a;
+  margin-bottom: 10px;
+}
+
+/* Estilos para la sección Quiénes Somos */
+.about-us {
+  padding: 60px 20px;
+  background-color: #f9f9f9; /* Un color de fondo ligeramente diferente */
+  text-align: center;
+}
+
+.about-us .container, .faq .container {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.about-us h2, .faq h2 {
+  font-size: 32px;
+  margin-bottom: 20px;
+  color: #333;
+}
+
+.about-us p {
+  font-size: 18px;
+  line-height: 1.6;
+  color: #666;
+}
+
+/* Estilos para la sección FAQ y el Acordeón */
+.faq {
+  padding: 60px 20px;
+  background-color: #fff;
+}
+
+.accordion {
+  width: 100%;
+  margin-top: 30px;
+}
+
+.accordion-item {
+  border-bottom: 1px solid #20232a;
+}
+
+.accordion-btn {
+  width: 100%;
+  background-color: transparent;
+  border: none;
+  text-align: left;
+  padding: 18px 20px;
+  font-size: 18px;
+  font-weight: 600;
+  color: #20232a;
+  cursor: pointer;
+  outline: none;
+  transition: background-color 0.3s ease;
+  position: relative;
+}
+
+.accordion-btn:hover {
+  background-color: #20232a49;
+}
+
+.accordion-btn::after {
+  content: '+';
+  font-size: 24px;
+  color: #20232a;
+  position: absolute;
+  right: 20px;
+  top: 50%;
+  transform: translateY(-50%);
+  transition: transform 0.3s ease;
+}
+
+.accordion-btn.active::after {
+  content: '−';
+  transform: translateY(-50%) rotate(180deg);
+}
+
+.accordion-content {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease-out;
+  background-color: #fff;
+}
+
+.accordion-content p {
+  padding: 20px;
+  font-size: 16px;
+  line-height: 1.5;
+  color: #555;
+  border-top: 1px solid #eee;
+}
+
+/* ===== Footer ===== */
+footer {
+  background: #20232a;
+  color: #fff;
+  text-align: center;
+  padding: 15px;
+  margin-top: 30px;
+  font-size: 14px;
 }

@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Liveness Recognition - Plataforma Educativa</title>
+  <link rel="stylesheet" href="CSS/styles.css"> <!-- Aquí conectamos el CSS externo -->
+</head>
+<body>
+
+  <!-- ======= Encabezado / Menú ======= -->
+  <header>
+    <nav>
+      <div class="logo">
+        <h1>SOLUTION <br>TECH</h1>
+      </div>
+      <ul class="nav-links">
+        <li><a href="index.html">Inicio</a></li>
+        <li><a href="HTML/cursos.html">Cursos</a></li>
+        <li><a href="#quienes-somos">Quiénes Somos</a></li>
+        <li><a href="#faq">FAQ</a></li>
+      </ul>
+      <a href="HTML/login.html" class="btn btn-login">Iniciar Sesión</a>
+    </nav>
+  </header>
+
+  <!-- ======= Sección principal / Banner ======= -->
+  <section class="hero">
+    <div class="hero-content">
+      <h1>Autenticación Biométrica para Educación Segura</h1>
+      <p>Garantizamos la identidad real de los estudiantes en entornos virtuales, usando tecnología avanzada de Liveness Recognition.</p>
+      <a href="#" class="btn">Explorar Plataforma</a>
+    </div>
+  </section>
+
+  <!-- ======= Sección de Beneficios ======= -->
+  <section class="benefits">
+    <h2>¿Por qué elegirnos?</h2>
+    <div class="benefit-list">
+      <div class="benefit-item">
+        <h3>✔ Seguridad</h3>
+        <p>Prevención de fraudes académicos con biometría facial avanzada.</p>
+      </div>
+      <div class="benefit-item">
+        <h3>✔ Confianza</h3>
+        <p>Aseguramos autenticidad en evaluaciones y procesos educativos.</p>
+      </div>
+      <div class="benefit-item">
+        <h3>✔ Innovación</h3>
+        <p>Tecnología de vanguardia aplicada al aprendizaje digital.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======= Sección Quiénes Somos ======= -->
+  <section id="quienes-somos" class="about-us">
+    <div class="container">
+      <h2>¿Quiénes Somos?</h2>
+      <p>
+        Somos un equipo de innovadores dedicados a fortalecer la integridad académica en la educación digital. 
+        Nuestra misión es proporcionar a las instituciones educativas las herramientas necesarias para garantizar 
+        una autenticación de estudiantes segura, confiable y justa, utilizando tecnología biométrica de vanguardia.
+      </p>
+    </div>
+  </section>
+
+  <!-- ======= Sección FAQ (Preguntas Frecuentes) ======= -->
+  <section id="faq" class="faq">
+    <div class="container">
+      <h2>Preguntas Frecuentes (FAQ)</h2>
+      <div class="accordion">
+        <div class="accordion-item">
+          <button class="accordion-btn">¿Cómo funciona la tecnología Liveness Recognition?</button>
+          <div class="accordion-content">
+            <p>Nuestra tecnología analiza en tiempo real los rasgos faciales y micro-movimientos para confirmar que el usuario es una persona real y no una fotografía o video, asegurando así la identidad del estudiante durante las evaluaciones.</p>
+          </div>
+        </div>
+        <div class="accordion-item">
+          <button class="accordion-btn">¿Es segura la información biométrica de los estudiantes?</button>
+          <div class="accordion-content">
+            <p>Absolutamente. La seguridad y privacidad de los datos es nuestra máxima prioridad. Toda la información biométrica se encripta y se almacena en servidores seguros, cumpliendo con las normativas de protección de datos más estrictas.</p>
+          </div>
+        </div>
+        <div class="accordion-item">
+          <button class="accordion-btn">¿Qué necesito para usar la plataforma?</button>
+          <div class="accordion-content">
+            <p>Solo necesitas un dispositivo con conexión a internet y una cámara web. Nuestra plataforma es compatible con la mayoría de los navegadores y sistemas operativos modernos, sin necesidad de instalar software adicional.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ======= Footer ======= -->
+  <footer>
+    <p>&copy; 2025 Liveness Recognition - Universidad Militar Nueva Granada</p>
+  </footer>
+
+  <script>
+    // Script para el acordeón de FAQ
+    const accordionBtns = document.querySelectorAll(".accordion-btn");
+
+    accordionBtns.forEach(btn => {
+      btn.addEventListener("click", function() {
+        // Cierra todos los demás acordeones
+        accordionBtns.forEach(otherBtn => {
+          if (otherBtn !== this) {
+            otherBtn.classList.remove("active");
+            otherBtn.nextElementSibling.style.maxHeight = null;
+          }
+        });
+
+        // Abre o cierra el acordeón actual
+        this.classList.toggle("active");
+        const content = this.nextElementSibling;
+        if (content.style.maxHeight) {
+          content.style.maxHeight = null;
+        } else {
+          content.style.maxHeight = content.scrollHeight + "px";
+        }
+      });
+    });
+  </script>
+
+</body>
+</html>

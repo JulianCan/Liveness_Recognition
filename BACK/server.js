@@ -50,11 +50,18 @@ app.use('/api/attempts', attemptsRoutes);
 app.use('/api/answers', answersRoutes);
 app.use('/api/media', mediaRoutes);
 
-
-// Set the port
-const PORT = process.env.PORT || 5000;
-
-// Start the server
-app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}`);
+// **AÑADIR ESTO:** Ruta básica para la raíz (/)
+app.get('/', (req, res) => {
+  res.json({ message: "Welcome to the Liveness Recognition API. Access your routes via /api/..." });
 });
+
+// Export the app for Vercel to use
+module.exports = app;
+
+// If this is executed locally, start the server
+if (require.main === module) {
+  const PORT = process.env.PORT || 5000;
+  app.listen(PORT, () => {
+    console.log(`Server is running on port ${PORT}`);
+  });
+}

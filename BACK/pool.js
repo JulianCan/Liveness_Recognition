@@ -1,41 +1,39 @@
-// pool.js
+// BACK/pool.js
+
 const { Pool } = require('pg');
 const dotenv = require('dotenv');
 
-// Cargar variables de entorno
 dotenv.config({ path: __dirname + '/.env' });
 
-// Mostrar variables críticas para debug (puedes comentar después)
-console.log('Connecting with user:', process.env.PG_USER);
-console.log('Connecting with password:', typeof process.env.PG_PASSWORD, process.env.PG_PASSWORD);
-
-// Verificar las variables de Azure (solo para depuración)
-console.log('Azure Face API Key:', process.env.FACE_APIKEY);
-console.log('Azure Face Endpoint:', process.env.FACE_ENDPOINT);
-
-// Crear pool de conexiones PostgreSQL
 const pool = new Pool({
+
+  // USAR LA CADENA DE CONEXIÓN COMPLETA:
+  connectionString: process.env.DATABASE_URL, 
   user: process.env.PG_USER,
   host: process.env.PG_HOST,
   database: process.env.PG_DATABASE,
   password: process.env.PG_PASSWORD,
   port: process.env.PG_PORT,
+  connectionString: process.env.DATABASE_URL,
+
   ssl: {
-    rejectUnauthorized: false // Permite conectarse a Azure PostgreSQL sin certificados locales
+    // Esto es NECESARIO para que Vercel se conecte a Supabase
+    rejectUnauthorized: false
   }
 });
 
-// Función para probar la conexión
+// ----------------------------------------------------------------------
+// FUNCIÓN PARA PROBAR LA CONEXIÓN
+// ----------------------------------------------------------------------
 const connectDB = async () => {
   try {
     const client = await pool.connect();
-    console.log('PostgreSQL Connected successfully!');
+    console.log('✅ PostgreSQL Connected successfully!');
     client.release(); // Liberar conexión al pool
   } catch (err) {
-    console.error('PostgreSQL Connection Error:', err);
-    process.exit(1); // Salir si falla la conexión
+    console.error('❌ PostgreSQL Connection Error:', err.message, err.code, err.hostname);
+    // ⚠️ ELIMINA: process.exit(1); 
   }
 };
 
-// Exportar el pool y la función de conexión
 module.exports = { pool, connectDB };

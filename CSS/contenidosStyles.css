@@ -37,6 +37,16 @@ nav .logo h1 {
     color: #61dafb;
 }
 
+nav .logo a {
+    text-decoration: none; /* Elimina el subrayado */
+    color: inherit; /* Hereda el color del h1 */
+}
+
+nav .logo a h1:hover {
+    color: #ffffff; /* Cambia el color del texto en hover */
+    transition: color 0.3s ease;
+}
+
 .nav-links {
     list-style: none;
     display: flex;

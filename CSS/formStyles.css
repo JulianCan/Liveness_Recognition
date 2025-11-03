@@ -45,6 +45,16 @@ h1 {
     color: #5f4b66;
 }
 
+header a {
+    text-decoration: none; /* Elimina el subrayado */
+    color: inherit; /* Hereda el color del h1 */
+}
+
+header a h1:hover {
+    color: #46304b; /* Color más oscuro para el hover */
+    transition: color 0.3s ease;
+}
+
 /* Estilo del formulario */
 .form-container {
     display: flex;

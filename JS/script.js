@@ -68,13 +68,36 @@ async function redirectToConfirmation() {
     const password = document.getElementById('password').value;
     const confirmPassword = document.getElementById('confirm-password').value;
 
-    // Validar la contraseña
     if (password !== confirmPassword) {
         alert('Las contraseñas no coinciden');
         return;
     }
 
-    // Enviar datos al back-end
+    // Paso 1: Ejecutar la prueba de liveness
+    alert("Antes de continuar, realiza la prueba de vida (se abrirá la cámara).");
+
+    try {
+        const livenessResponse = await fetch("http://127.0.0.1:5000/api/liveness", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" }
+        });
+
+        const livenessData = await livenessResponse.json();
+
+        if (!livenessResponse.ok) {
+            alert("Error en la prueba de liveness: " + livenessData.message);
+            return;
+        }
+
+        alert("✅ Prueba de liveness completada correctamente.");
+
+    } catch (error) {
+        alert("Error conectando con el backend de liveness.");
+        console.error(error);
+        return;
+    }
+
+    // Paso 2: Registrar usuario (esto se conecta con tu API actual)
     const response = await fetch('http://localhost:5000/api/users/add', {
         method: 'POST',
         headers: {
@@ -83,15 +106,15 @@ async function redirectToConfirmation() {
         body: JSON.stringify({
             name: nombre,
             email: email,
-            password: password, // Puedes agregar un hash aquí si lo deseas
-            role: 'student' // Asignar un rol por defecto
+            password: password,
+            role: 'student'
         })
     });
 
     const data = await response.json();
     if (response.ok) {
         console.log('Usuario registrado', data);
-        window.location.href = "cursos.html";  // Redirige a la página de cursos después del registro
+        window.location.href = "cursos.html";
     } else {
         alert('Error al registrar el usuario: ' + data.error);
     }

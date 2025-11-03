@@ -1,65 +1,158 @@
-let mediaRecorder;
-let recordedBlobs;
+// ---- Variables ----
 let videoElement = document.getElementById('video');
 let startButton = document.getElementById('start-recording');
-let stopButton = document.getElementById('stop-recording');
+let enviarRegistroBtn = document.getElementById('enviar-registro');
 let registerButton = document.getElementById('register-btn');
 let registerSection = document.getElementById('register-section');
 let gestureSection = document.getElementById('gesture-section');
+let gestureTitle = document.querySelector('#gesture-section .form-container h2'); // 👈 el <h2> existente
 
-// Función para iniciar la grabación
-async function startRecording() {
-    const stream = await navigator.mediaDevices.getUserMedia({ video: true, audio: false });
-    videoElement.srcObject = stream;
+let currentChallenge = 0;
+// Nuevo orden de retos:
+let challenges = ["Gira la cabeza 🤖", "Abre la boca 👄", "Parpadea 👁"];
+let passedLiveness = false;
 
-    mediaRecorder = new MediaRecorder(stream);
-    recordedBlobs = [];
-
-    mediaRecorder.ondataavailable = handleDataAvailable;
-    mediaRecorder.onstop = handleStop;
-    
-    mediaRecorder.start();
-    startButton.style.display = 'none';
-    stopButton.style.display = 'block';
-}
-
-// Función para detener la grabación
-function stopRecording() {
-    mediaRecorder.stop();
-    const stream = videoElement.srcObject;
-    const tracks = stream.getTracks();
-    tracks.forEach(track => track.stop());
-    videoElement.srcObject = null;
-
-    stopButton.style.display = 'none';
-    startButton.style.display = 'block';
-}
-
-// Función para manejar los datos grabados
-function handleDataAvailable(event) {
-    if (event.data.size > 0) {
-        recordedBlobs.push(event.data);
-    }
-}
-
-// Función para manejar la parada de grabación
-function handleStop() {
-    const superBuffer = new Blob(recordedBlobs, { type: 'video/webm' });
-    const videoURL = window.URL.createObjectURL(superBuffer);
-    videoElement.src = videoURL;
-
-    // Guardar el video en el campo oculto para enviarlo al servidor
-    document.getElementById('video-input').value = videoURL;
-}
-
-// Función para cambiar a la sección de grabación
+// ---- Mostrar la cámara ----
 registerButton.addEventListener('click', () => {
     registerSection.style.display = 'none';
     gestureSection.style.display = 'flex';
+    gestureTitle.textContent = "Graba tu gesto facial"; // texto inicial
 });
 
-// Redirigir al hacer clic en "Enviar Registro"
+// ---- Cambiar el texto del h2 dinámicamente ----
+function showInstruction(text, color = "#333") {
+    gestureTitle.style.color = color;
+    gestureTitle.style.transition = "all 0.3s ease";
+    gestureTitle.textContent = text;
+}
+
+// ---- Configurar MediaPipe FaceMesh ----
+const faceMesh = new FaceMesh({
+    locateFile: (file) => `https://cdn.jsdelivr.net/npm/@mediapipe/face_mesh/${file}`
+});
+
+faceMesh.setOptions({
+    maxNumFaces: 1,
+    refineLandmarks: true,
+    minDetectionConfidence: 0.6,
+    minTrackingConfidence: 0.6
+});
+
+const camera = new Camera(videoElement, {
+    onFrame: async () => {
+        await faceMesh.send({ image: videoElement });
+    },
+    width: 640,
+    height: 480
+});
+
+// ---- Variables de detección ----
+let blinkDetected = false;
+let mouthOpenDetected = false;
+let headTurnDetected = false;
+let headTurnStableFrames = 0; // estabilidad del giro
+
+// ---- Procesamiento de rostro ----
+faceMesh.onResults((results) => {
+    if (!results.multiFaceLandmarks || results.multiFaceLandmarks.length === 0) return;
+    const landmarks = results.multiFaceLandmarks[0];
+
+    // Calcular medidas básicas
+    function euclid(a, b) {
+        const dx = a.x - b.x;
+        const dy = a.y - b.y;
+        return Math.sqrt(dx * dx + dy * dy);
+    }
+
+    function aspectRatio(top, bottom, left, right) {
+        const v = euclid(top, bottom);
+        const h = euclid(left, right);
+        return v / h;
+    }
+
+    const leftEye = [33, 159, 133, 145];
+    const rightEye = [362, 386, 263, 374];
+    const mouth = [13, 14, 78, 308];
+    const leftCheek = landmarks[234];
+    const rightCheek = landmarks[454];
+    const nose = landmarks[1];
+
+    const earLeft = aspectRatio(
+        landmarks[leftEye[1]],
+        landmarks[leftEye[3]],
+        landmarks[leftEye[0]],
+        landmarks[leftEye[2]]
+    );
+    const earRight = aspectRatio(
+        landmarks[rightEye[1]],
+        landmarks[rightEye[3]],
+        landmarks[rightEye[0]],
+        landmarks[rightEye[2]]
+    );
+    const ear = (earLeft + earRight) / 2.0;
+    const mouthAR = aspectRatio(
+        landmarks[mouth[0]],
+        landmarks[mouth[1]],
+        landmarks[mouth[2]],
+        landmarks[mouth[3]]
+    );
+    const ratio = euclid(nose, leftCheek) / euclid(nose, rightCheek);
+
+    // ---- Desafíos secuenciales (nuevo orden) ----
+    if (currentChallenge === 0) {
+        showInstruction(challenges[0]);
+        // Detectar giro de cabeza estable
+        if (ratio > 1.18 || ratio < 0.82) {
+            headTurnStableFrames++;
+        } else {
+            headTurnStableFrames = 0;
+        }
+        if (headTurnStableFrames > 8) {
+            headTurnDetected = true;
+            currentChallenge++;
+            showInstruction("✅ Bien! Ahora: " + challenges[1], "green");
+            setTimeout(() => showInstruction(challenges[1]), 1500);
+        }
+    } 
+    else if (currentChallenge === 1) {
+        if (mouthAR > 0.35) {
+            mouthOpenDetected = true;
+            currentChallenge++;
+            showInstruction("✅ Perfecto! Ahora: " + challenges[2], "green");
+            setTimeout(() => showInstruction(challenges[2]), 1500);
+        }
+    } 
+    else if (currentChallenge === 2) {
+        if (ear < 0.22) {
+            blinkDetected = true;
+            currentChallenge++;
+            showInstruction("✅ Prueba completada con éxito 🎉", "green");
+            passedLiveness = true;
+            enviarRegistroBtn.disabled = false;
+
+            // Esperar un poco antes de apagar la cámara
+            setTimeout(() => {
+                camera.stop();
+                showInstruction("✅ Prueba completada con éxito 🎉", "green");
+            }, 1000);
+        }
+    }
+});
+
+// ---- Iniciar cámara ----
+startButton.addEventListener('click', () => {
+    camera.start();
+    startButton.style.display = 'none';
+    showInstruction(challenges[currentChallenge]);
+});
+
+// ---- Enviar registro ----
 async function redirectToConfirmation() {
+    if (!passedLiveness) {
+        alert("Debes completar la prueba de vida antes de continuar.");
+        return;
+    }
+
     const nombre = document.getElementById('nombre').value;
     const apellido = document.getElementById('apellido').value;
     const institucion = document.getElementById('institucion').value;
@@ -73,36 +166,9 @@ async function redirectToConfirmation() {
         return;
     }
 
-    // Paso 1: Ejecutar la prueba de liveness
-    alert("Antes de continuar, realiza la prueba de vida (se abrirá la cámara).");
-
-    try {
-        const livenessResponse = await fetch("http://127.0.0.1:5000/api/liveness", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" }
-        });
-
-        const livenessData = await livenessResponse.json();
-
-        if (!livenessResponse.ok) {
-            alert("Error en la prueba de liveness: " + livenessData.message);
-            return;
-        }
-
-        alert("✅ Prueba de liveness completada correctamente.");
-
-    } catch (error) {
-        alert("Error conectando con el backend de liveness.");
-        console.error(error);
-        return;
-    }
-
-    // Paso 2: Registrar usuario (esto se conecta con tu API actual)
     const response = await fetch('http://localhost:5000/api/users/add', {
         method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
             name: nombre,
             email: email,
@@ -113,12 +179,13 @@ async function redirectToConfirmation() {
 
     const data = await response.json();
     if (response.ok) {
-        console.log('Usuario registrado', data);
+        alert('Usuario registrado correctamente');
         window.location.href = "cursos.html";
     } else {
         alert('Error al registrar el usuario: ' + data.error);
     }
 }
+
 
 // Función para manejar el login
 async function redirectToCourses() {

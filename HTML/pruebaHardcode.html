@@ -123,11 +123,6 @@
     </footer>
 
 <script>
-
-/* =====================================================================
-   PREGUNTAS Y RESPUESTAS
-===================================================================== */
-
 let currentQuestion = 0;
 let answers = [];
 
@@ -145,33 +140,18 @@ const questions = [
 ];
 
 const correctAnswers = [
-    "paris",
-    "respuesta2",
-    "respuesta3",
-    "respuesta4",
-    "respuesta5",
-    "respuesta6",
-    "respuesta7",
-    "respuesta8",
-    "respuesta9",
-    "respuesta10"
+    "paris", "respuesta2", "respuesta3", "respuesta4", "respuesta5",
+    "respuesta6", "respuesta7", "respuesta8", "respuesta9", "respuesta10"
 ];
-
-/* =====================================================================
-   ACORDEÓN
-===================================================================== */
 
 function toggleAccordion() {
     const acc = document.getElementById("accordion-content");
     acc.style.display = acc.style.display === "block" ? "none" : "block";
 }
+
 function showExamContent() {
     document.getElementById('exam-container').style.display = 'block';
 }
-
-/* =====================================================================
-   RESET GENERAL
-===================================================================== */
 
 function resetExamState() {
     currentQuestion = 0;
@@ -182,18 +162,10 @@ function resetExamState() {
     if (fb) fb.innerHTML = "";
 }
 
-/* =====================================================================
-   INICIAR EXAMEN (PRIMERA VERIFICACIÓN FACIAL)
-===================================================================== */
-
 function startExam() {
     document.getElementById("start-exam").style.display = "none";
     openVerification("start");
 }
-
-/* =====================================================================
-   MOSTRAR PREGUNTA
-===================================================================== */
 
 function showNextQuestion() {
     const qbox = document.getElementById("question-container");
@@ -207,14 +179,9 @@ function showNextQuestion() {
 
     document.getElementById("next-btn").style.display =
         currentQuestion < 9 ? "inline-block" : "none";
-
     document.getElementById("finish-btn").style.display =
         currentQuestion === 9 ? "inline-block" : "none";
 }
-
-/* =====================================================================
-   SIGUIENTE PREGUNTA
-===================================================================== */
 
 function nextQuestion() {
     const input = document.getElementById("answer-input");
@@ -237,10 +204,6 @@ function nextQuestion() {
     showNextQuestion();
 }
 
-/* =====================================================================
-   FINALIZAR EXAMEN
-===================================================================== */
-
 function finishExam() {
     const input = document.getElementById("answer-input");
     const msg = document.getElementById("feedback-message");
@@ -252,18 +215,18 @@ function finishExam() {
     }
 
     answers.push(input.value.trim().toLowerCase());
-
     openVerification("final");
 }
-
-/* =====================================================================
-   ABRIR RETO BIOMÉTRICO
-===================================================================== */
 
 function openVerification(mode) {
     const vc = document.getElementById("video-container");
     vc.dataset.mode = mode;
     vc.style.display = "block";
+
+    // Reiniciar estado de retos
+    g_currentChallenge = 0;
+    g_passed = false;
+    g_turnStable = 0;
 
     document.getElementById("form-container").style.display = "none";
     document.getElementById("start-gesture-btn").style.display = "inline-block";
@@ -271,13 +234,13 @@ function openVerification(mode) {
     document.getElementById("gesture-title").textContent = "Verificación facial";
 }
 
-
-/* =====================================================================
-   SISTEMA DE RETOS BIOMÉTRICOS (GIRO, BOCA, PARPADEO)
-===================================================================== */
+/* ===================================================================
+   SISTEMA DE RETOS BIOMÉTRICOS
+=================================================================== */
 
 let g_currentChallenge = 0;
 let g_passed = false;
+let g_turnStable = 0;
 
 const g_challenges = [
     "Gira la cabeza 🤖",
@@ -285,44 +248,34 @@ const g_challenges = [
     "Parpadea 👁"
 ];
 
-let g_turnStable = 0;
+let exam_faceMesh = null;
+let exam_camera = null;
+let isCameraActive = false;
+let faceMeshInitialized = false;
 
-function startExamGesture() {
-    g_currentChallenge = 0;
-    g_passed = false;
+function initFaceMesh() {
+    // Solo inicializar una vez
+    if (faceMeshInitialized) {
+        return;
+    }
 
-    showGestureInstruction(g_challenges[g_currentChallenge]);
+    exam_faceMesh = new FaceMesh({
+        locateFile: f => `https://cdn.jsdelivr.net/npm/@mediapipe/face_mesh/${f}`
+    });
 
-    exam_camera.start();
+    exam_faceMesh.setOptions({
+        maxNumFaces: 1,
+        refineLandmarks: true,
+        minDetectionConfidence: 0.7,
+        minTrackingConfidence: 0.7
+    });
 
-    document.getElementById("start-gesture-btn").style.display = "none";
+    exam_faceMesh.onResults(handleFaceMeshResults);
+    faceMeshInitialized = true;
 }
 
-function showGestureInstruction(text, color = "#222") {
-    const t = document.getElementById("gesture-title");
-    t.style.color = color;
-    t.textContent = text;
-}
-
-
-/* =====================================================================
-   ACTIVAR FACE MESH
-===================================================================== */
-
-const exam_faceMesh = new FaceMesh({
-    locateFile: f =>
-        `https://cdn.jsdelivr.net/npm/@mediapipe/face_mesh/${f}`
-});
-
-exam_faceMesh.setOptions({
-    maxNumFaces: 1,
-    refineLandmarks: true,
-    minDetectionConfidence: 0.7,
-    minTrackingConfidence: 0.7
-});
-
-exam_faceMesh.onResults((res) => {
-    if (!res.multiFaceLandmarks) return;
+function handleFaceMeshResults(res) {
+    if (!res.multiFaceLandmarks || res.multiFaceLandmarks.length === 0) return;
 
     const lm = res.multiFaceLandmarks[0];
 
@@ -337,64 +290,98 @@ exam_faceMesh.onResults((res) => {
     const leftCheek = lm[234];
     const rightCheek = lm[454];
     const nose = lm[1];
-
     const ratio = dist(nose, leftCheek) / dist(nose, rightCheek);
-
     const mouthAR = ar(lm[13], lm[14], lm[78], lm[308]);
-
     const eyeAR = ar(lm[159], lm[145], lm[33], lm[133]);
 
-    /* ---------------- RETO 1: GIRO ---------------- */
+    // RETO 1: GIRO
     if (g_currentChallenge === 0) {
         if (ratio > 1.18 || ratio < 0.82) {
             g_turnStable++;
-        } else g_turnStable = 0;
+        } else {
+            g_turnStable = 0;
+        }
 
         if (g_turnStable > 8) {
             g_currentChallenge++;
-            showGestureInstruction("✔ Bien! Ahora: " + g_challenges[1], "green");
+            g_turnStable = 0;
+            showGestureInstruction("✓ Bien! Ahora: " + g_challenges[1], "green");
             setTimeout(() => {
                 showGestureInstruction(g_challenges[1]);
             }, 1000);
         }
     }
-
-    /* ---------------- RETO 2: BOCA ---------------- */
+    // RETO 2: BOCA
     else if (g_currentChallenge === 1) {
         if (mouthAR > 0.33) {
             g_currentChallenge++;
-            showGestureInstruction("✔ Perfecto! Ahora: " + g_challenges[2], "green");
+            showGestureInstruction("✓ Perfecto! Ahora: " + g_challenges[2], "green");
             setTimeout(() => {
                 showGestureInstruction(g_challenges[2]);
             }, 1000);
         }
     }
-
-    /* ---------------- RETO 3: PARPADEO ---------------- */
+    // RETO 3: PARPADEO
     else if (g_currentChallenge === 2) {
         if (eyeAR < 0.18) {
             g_passed = true;
-            showGestureInstruction("Verificación completada ✔", "green");
+            showGestureInstruction("Verificación completada ✓", "green");
 
             setTimeout(() => {
-                exam_camera.stop();
+                stopCamera();
                 completeGestureVerification();
             }, 1200);
         }
     }
-});
+}
 
-const exam_camera = new Camera(document.getElementById("video"), {
-    onFrame: async () => {
-        await exam_faceMesh.send({ image: document.getElementById("video") });
-    },
-    width: 640,
-    height: 480
-});
+function startExamGesture() {
+    g_currentChallenge = 0;
+    g_passed = false;
+    g_turnStable = 0;
+    
+    showGestureInstruction(g_challenges[g_currentChallenge]);
+    document.getElementById("start-gesture-btn").style.display = "none";
 
-/* =====================================================================
-   CUANDO TERMINAN LOS RETOS
-===================================================================== */
+    // Inicializar FaceMesh solo la primera vez
+    initFaceMesh();
+
+    // Inicializar o reiniciar cámara
+    if (!exam_camera) {
+        exam_camera = new Camera(document.getElementById("video"), {
+            onFrame: async () => {
+                if (isCameraActive && exam_faceMesh) {
+                    await exam_faceMesh.send({ image: document.getElementById("video") });
+                }
+            },
+            width: 640,
+            height: 480
+        });
+    }
+
+    isCameraActive = true;
+    exam_camera.start();
+}
+
+function stopCamera() {
+    isCameraActive = false;
+    
+    if (exam_camera) {
+        exam_camera.stop();
+        
+        // Detener todos los tracks del video pero NO destruir la cámara
+        const video = document.getElementById("video");
+        if (video.srcObject) {
+            video.srcObject.getTracks().forEach(track => track.stop());
+        }
+    }
+}
+
+function showGestureInstruction(text, color = "#222") {
+    const t = document.getElementById("gesture-title");
+    t.style.color = color;
+    t.textContent = text;
+}
 
 function completeGestureVerification() {
     const vc = document.getElementById("video-container");
@@ -418,10 +405,6 @@ function completeGestureVerification() {
     }
 }
 
-/* =====================================================================
-   CALCULAR NOTA FINAL
-===================================================================== */
-
 function finishScore() {
     let score = 0;
 
@@ -437,13 +420,10 @@ function finishScore() {
         "Puntuación: " + percent + "%"
     );
 
-    // Reiniciar para repetir examen
     document.getElementById("start-exam").style.display = "inline-block";
     resetExamState();
 }
-
 </script>
-
 
 </body>
 </html>

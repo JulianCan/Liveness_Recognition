@@ -9,36 +9,96 @@
     <!-- MEDIAPIPE & CAMERA -->
 <script src="https://cdn.jsdelivr.net/npm/@mediapipe/camera_utils/camera_utils.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@mediapipe/face_mesh/face_mesh.js"></script>
-    <style>
-    #question-container h3 {
-        font-size: 22px;
-        margin-bottom: 15px;
-    }
-    #answer-input {
-        width: 100%;
-        height: 55px;
-        padding: 12px 15px;
-        font-size: 18px;
-        border-radius: 10px;
-        border: 2px solid #ccc;
-        margin-bottom: 15px;
-    }
-    #answer-input:focus {
-        border-color: #007bff;
-        outline: none;
-    }
-    #feedback-message {
-        font-size: 16px;
-        margin-top: -5px;
-        margin-bottom: 15px;
-        color: red;
-        min-height: 22px;
-    }
-    #next-btn,
-    #finish-btn {
-        margin-top: 10px;
-    }
-    </style>
+<style>
+
+        .content h1 {
+            font-size: 28px;
+            margin-bottom: 25px;
+        }
+        .content h2 {
+            font-size: 24px;
+            margin-bottom: 15px;
+        }
+        .content h3 {
+            font-size: 20px;
+            margin-bottom: 12px;
+        }
+        .content p {
+            line-height: 1.8;
+            margin-bottom: 15px;
+            color: #555;
+            font-size: 16px;
+        }
+        .video-wrapper {
+            max-width: 800px;
+            margin: 20px 0;
+        }
+        .video-wrapper iframe {
+            width: 100%;
+            height: 450px;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+        .text-content {
+            max-width: 900px;
+        }
+        .text-content ul, .text-content ol {
+            margin: 15px 0;
+            padding-left: 30px;
+        }
+        .text-content li {
+            margin-bottom: 8px;
+            line-height: 1.6;
+            color: #555;
+        }
+        button {
+            padding: 12px 25px;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 600;
+            transition: background 0.3s;
+        }
+        #question-container h3 {
+            font-size: 22px;
+            margin-bottom: 15px;
+        }
+        #answer-input {
+            width: 100%;
+            height: 55px;
+            padding: 12px 15px;
+            font-size: 18px;
+            border-radius: 10px;
+            border: 2px solid #ccc;
+            margin-bottom: 15px;
+        }
+        #answer-input:focus {
+            border-color: #3498db;
+            outline: none;
+        }
+        #feedback-message {
+            font-size: 16px;
+            margin-top: -5px;
+            margin-bottom: 15px;
+            color: #e74c3c;
+            min-height: 22px;
+        }
+        #next-btn, #finish-btn {
+            margin-top: 10px;
+        }
+        #video {
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+        #status {
+            text-align: center;
+            margin-top: 10px;
+            font-weight: 600;
+            color: #555;
+        }
+</style>
 
 </head>
 <body>
@@ -68,44 +128,116 @@
                 <li>
                     <button onclick="toggleAccordion()">Módulo 1</button>
                     <div class="accordion-content" id="accordion-content">
-                        <button onclick="showExamContent()">Examen</button>
+                        <button onclick="showContent('leccion1')">Introduccion a la ciberseguridad</button>
+                        <button onclick="showContent('video')">Aplicacion a la multimedia</button>
+                        <button onclick="showContent('leccion2')">Lección 2: Conceptos Avanzados</button>
+                        <button onclick="showContent('examen')">Examen</button>
                     </div>
                 </li>
             </ul>
         </aside>
 
-        <section class="content">
+ <section class="content">
             <h1>Contenido</h1>
             <div id="module-content">
+                <p>Selecciona un contenido del menú lateral para comenzar.</p>
+            </div>
 
-                <!-- Aquí se muestra el contenido del examen cuando se hace clic en "Examen" -->
-                <div id="exam-container" style="display:none;">
-                    <h2>Examen</h2>
-                    <p>A continuación se muestra el examen. Presiona "Iniciar prueba".</p>
-                    <button id="start-exam" onclick="startExam()">Iniciar prueba</button>
+            <!-- LECCIÓN 1: TEXTO -->
+            <div id="leccion1-container" style="display:none;">
+                <div class="text-content">
+                    <h2>Lección 1: Introducción al Tema</h2>
+                    <p>Bienvenido a la primera lección de este módulo. En esta sección aprenderás los conceptos fundamentales que necesitas para comprender el tema en profundidad.</p>
+                    
+                    <h3>Objetivos de aprendizaje</h3>
+                    <ul>
+                        <li>Comprender los conceptos básicos del tema</li>
+                        <li>Identificar los elementos principales</li>
+                        <li>Aplicar conocimientos en ejemplos prácticos</li>
+                    </ul>
+
+                    <h3>Contenido Principal</h3>
+                    <p>El contenido de esta lección se centra en establecer una base sólida de conocimientos. Es importante que leas cuidadosamente cada sección y tomes notas de los puntos más relevantes.</p>
+                    
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.</p>
+
+                    <h3>Puntos Clave</h3>
+                    <ol>
+                        <li>Primer concepto fundamental a recordar</li>
+                        <li>Segundo aspecto importante del tema</li>
+                        <li>Tercera idea central que conecta los conceptos</li>
+                    </ol>
+
+                    <p>Continúa con el siguiente contenido cuando estés listo.</p>
+                </div>
+            </div>
+
+            <!-- VIDEO TUTORIAL -->
+            <div id="video-container-content" style="display:none;">
+                <h2>Video Tutorial</h2>
+                <p>A continuación encontrarás un video explicativo sobre el tema. Te recomendamos ver el video completo y tomar notas.</p>
+                
+                <div class="video-wrapper">
+                    <!-- Reemplaza este video de ejemplo con tu propio video -->
+                    <iframe width="560" height="315" src="https://www.youtube.com/embed/3G8yJaudGC0?si=XfB2az-SaucamVR3" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
                 </div>
 
-                <!-- Contenedor para la grabación del video, solo se muestra después de hacer clic en "Iniciar prueba" -->
-                <div id="video-container" style="display:none;">
-                    <h3 id="gesture-title">Verificación de cámara</h3>
+                <p style="margin-top: 20px;">Una vez que hayas visto el video, continúa con la siguiente lección para profundizar en los conceptos presentados.</p>
+            </div>
 
-                    <video id="video" autoplay style="width:320px;"></video>
+            <!-- LECCIÓN 2: TEXTO -->
+            <div id="leccion2-container" style="display:none;">
+                <div class="text-content">
+                    <h2>Lección 2: Conceptos Avanzados</h2>
+                    <p>En esta segunda lección profundizaremos en aspectos más complejos del tema. Los conceptos que veremos aquí se construyen sobre lo aprendido en la lección anterior.</p>
+                    
+                    <h3>Temas a Desarrollar</h3>
+                    <ul>
+                        <li>Aplicaciones prácticas avanzadas</li>
+                        <li>Casos de estudio reales</li>
+                        <li>Mejores prácticas en la industria</li>
+                        <li>Herramientas y recursos recomendados</li>
+                    </ul>
 
-                    <p id="status" style="text-align:center; margin-top:10px;">Esperando...</p>
+                    <h3>Desarrollo del Contenido</h3>
+                    <p>Los conceptos avanzados requieren una comprensión más profunda de los fundamentos. Es esencial que hayas completado la lección anterior antes de continuar.</p>
+                    
+                    <p>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
 
-                    <button id="start-gesture-btn" onclick="startExamGesture()">Iniciar verificación</button>
+                    <h3>Ejemplos Prácticos</h3>
+                    <p>A continuación se presentan algunos ejemplos que ilustran cómo aplicar estos conceptos en situaciones reales:</p>
+                    <ol>
+                        <li><strong>Ejemplo 1:</strong> Aplicación en contexto profesional</li>
+                        <li><strong>Ejemplo 2:</strong> Resolución de problemas comunes</li>
+                        <li><strong>Ejemplo 3:</strong> Optimización de procesos</li>
+                    </ol>
+
+                    <h3>Conclusión</h3>
+                    <p>Con estos conocimientos avanzados, estarás preparado para realizar el examen final del módulo. Asegúrate de haber comprendido todos los conceptos antes de continuar.</p>
                 </div>
+            </div>
 
-                <!-- Formulario después de verificar el video, solo se muestra después de la verificación -->
-                <div id="form-container" style="display:none;">
-                    <h3>Formulario del examen</h3>
+            <!-- EXAMEN -->
+            <div id="exam-container" style="display:none;">
+                <h2>Examen</h2>
+                <p>A continuación se muestra el examen. Presiona "Iniciar prueba".</p>
+                <button id="start-exam" onclick="startExam()">Iniciar prueba</button>
+            </div>
 
-                    <div id="question-container"></div>
+            <!-- Contenedor para la grabaciÃ³n del video, solo se muestra despuÃ©s de hacer clic en "Iniciar prueba" -->
+            <div id="video-container" style="display:none;">
+                <h3 id="gesture-title">Verificación de cámara</h3>
+                <video id="video" autoplay style="width:320px;"></video>
+                <p id="status" style="text-align:center; margin-top:10px;">Esperando...</p>
+                <button id="start-gesture-btn" onclick="startExamGesture()">Iniciar verificación</button>
+            </div>
 
-                    <button id="next-btn" onclick="nextQuestion()" style="display:none;">Siguiente</button>
-                    <button id="finish-btn" onclick="finishExam()" style="display:none;">Terminar examen</button>
-                </div>
-
+            <!-- Formulario despuÃ©s de verificar el video, solo se muestra despuÃ©s de la verificaciÃ³n -->
+            <div id="form-container" style="display:none;">
+                <h3>Formulario del examen</h3>
+                <div id="question-container"></div>
+                <button id="next-btn" onclick="nextQuestion()" style="display:none;">Siguiente</button>
+                <button id="finish-btn" onclick="finishExam()" style="display:none;">Terminar examen</button>
             </div>
         </section>
     </main>
@@ -143,8 +275,29 @@ function toggleAccordion() {
     acc.style.display = acc.style.display === "block" ? "none" : "block";
 }
 
-function showExamContent() {
-    document.getElementById('exam-container').style.display = 'block';
+function showContent(type) {
+    // Ocultar todos los contenedores
+    document.getElementById('module-content').style.display = 'none';
+    document.getElementById('leccion1-container').style.display = 'none';
+    document.getElementById('video-container-content').style.display = 'none';
+    document.getElementById('leccion2-container').style.display = 'none';
+    document.getElementById('exam-container').style.display = 'none';
+
+    // Mostrar el contenedor correspondiente
+    switch(type) {
+        case 'leccion1':
+            document.getElementById('leccion1-container').style.display = 'block';
+            break;
+        case 'video':
+            document.getElementById('video-container-content').style.display = 'block';
+            break;
+        case 'leccion2':
+            document.getElementById('leccion2-container').style.display = 'block';
+            break;
+        case 'examen':
+            document.getElementById('exam-container').style.display = 'block';
+            break;
+    }
 }
 
 function resetExamState() {

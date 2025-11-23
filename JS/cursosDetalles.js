@@ -127,7 +127,7 @@ document.getElementById('enroll-button').addEventListener('click', async () => {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        user_id: 13,  // Asegúrate de que esto obtenga el ID del usuario actual
+        user_id: 23,  // Asegúrate de que esto obtenga el ID del usuario actual
         course_id: courseData.id,
         status: 'active',
         progress_pct: 0

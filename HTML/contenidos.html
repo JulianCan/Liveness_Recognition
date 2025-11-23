@@ -1,11 +1,45 @@
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="\CSS\contenidosStyles.css">
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"> <!-- Cargar Material Icons -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <title>Detalles Curso</title>
+    <!-- MEDIAPIPE & CAMERA -->
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/camera_utils/camera_utils.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/face_mesh/face_mesh.js"></script>
+    <style>
+        #question-container h3 {
+            font-size: 22px;
+            margin-bottom: 15px;
+        }
+        #answer-input {
+            width: 100%;
+            height: 55px;
+            padding: 12px 15px;
+            font-size: 18px;
+            border-radius: 10px;
+            border: 2px solid #ccc;
+            margin-bottom: 15px;
+        }
+        #answer-input:focus {
+            border-color: #007bff;
+            outline: none;
+        }
+        #feedback-message {
+            font-size: 16px;
+            margin-top: -5px;
+            margin-bottom: 15px;
+            color: red;
+            min-height: 22px;
+        }
+        #next-btn,
+        #finish-btn {
+            margin-top: 10px;
+        }
+    </style>
 </head>
 <body>
     <header class="header">
@@ -19,10 +53,10 @@
                 <li><a href="Perfil.html">Área Personal</a></li>
             </ul>
             <div class="user-icons">
-                <span class="material-icons">notifications</span> <!-- Notificaciones -->
-                <span class="material-icons">chat</span> <!-- Chat -->
-                <span class="material-icons">email</span> <!-- Correo -->
-                <span class="material-icons profile-icon">account_circle</span> <!-- Perfil -->
+                <span class="material-icons">notifications</span>
+                <span class="material-icons">chat</span>
+                <span class="material-icons">email</span>
+                <span class="material-icons profile-icon">account_circle</span>
             </div>
         </nav>
     </header>
@@ -32,7 +66,7 @@
         <aside class="sidebar">
             <h3 id="course-name">Nombre del curso</h3>
             <ul class="module-list" id="modules-list">
-                <!-- Módulos se agregarán dinámicamente -->
+                <!-- Módulos se agregarán dinámicamente desde la BD -->
             </ul>
         </aside>
 
@@ -41,10 +75,32 @@
             <h1>Contenido</h1>
             <div id="module-content">
                 <p>Selecciona una lección para ver el contenido.</p>
+
+                <!-- Contenedor del examen hardcodeado -->
+                <div id="exam-container" style="display:none;">
+                    <h2>Examen</h2>
+                    <p>A continuación se muestra el examen. Presiona "Iniciar prueba".</p>
+                    <button id="start-exam" onclick="startExam()">Iniciar prueba</button>
+                </div>
+
+                <!-- Contenedor para la verificación de cámara -->
+                <div id="video-container" style="display:none;">
+                    <h3 id="gesture-title">Verificación de cámara</h3>
+                    <video id="video" autoplay style="width:320px;"></video>
+                    <p id="status" style="text-align:center; margin-top:10px;">Esperando...</p>
+                    <button id="start-gesture-btn" onclick="startExamGesture()">Iniciar verificación</button>
+                </div>
+
+                <!-- Formulario del examen -->
+                <div id="form-container" style="display:none;">
+                    <h3>Formulario del examen</h3>
+                    <div id="question-container"></div>
+                    <button id="next-btn" onclick="nextQuestion()" style="display:none;">Siguiente</button>
+                    <button id="finish-btn" onclick="finishExam()" style="display:none;">Terminar examen</button>
+                </div>
             </div>
         </section>
     </main>
-
 
     <footer class="footer">
         <div class="footer-item">
@@ -76,6 +132,310 @@
         </div>
     </footer>
 
+    <!-- Script original de contenidos.js para cargar desde BD -->
     <script src="\JS\contenidos.js"></script>
+
+    <!-- Script del examen hardcodeado -->
+    <script>
+    let currentQuestion = 0;
+    let answers = [];
+
+    const questions = [
+        "¿Cuál es la capital de Francia?",
+        "Pregunta 2",
+        "Pregunta 3",
+        "Pregunta 4",
+        "Pregunta 5",
+        "Pregunta 6",
+        "Pregunta 7",
+        "Pregunta 8",
+        "Pregunta 9",
+        "Pregunta 10"
+    ];
+
+    const correctAnswers = [
+        "paris", "respuesta2", "respuesta3", "respuesta4", "respuesta5",
+        "respuesta6", "respuesta7", "respuesta8", "respuesta9", "respuesta10"
+    ];
+
+    // Función para mostrar el contenido del examen hardcodeado
+    function showExamContent() {
+        // Ocultar el contenido normal de módulos
+        const moduleContent = document.getElementById('module-content');
+        moduleContent.innerHTML = '';
+        
+        // Mostrar el contenedor del examen
+        document.getElementById('exam-container').style.display = 'block';
+        moduleContent.appendChild(document.getElementById('exam-container'));
+        moduleContent.appendChild(document.getElementById('video-container'));
+        moduleContent.appendChild(document.getElementById('form-container'));
+    }
+
+    function resetExamState() {
+        currentQuestion = 0;
+        answers = [];
+        document.getElementById("form-container").style.display = "none";
+        document.getElementById("question-container").innerHTML = "";
+        const fb = document.getElementById("feedback-message");
+        if (fb) fb.innerHTML = "";
+    }
+
+    function startExam() {
+        document.getElementById("start-exam").style.display = "none";
+        openVerification("start");
+    }
+
+    function showNextQuestion() {
+        const qbox = document.getElementById("question-container");
+        document.getElementById("form-container").style.display = "block";
+
+        qbox.innerHTML = `
+            <h3>${questions[currentQuestion]}</h3>
+            <input id="answer-input" type="text">
+            <div id="feedback-message"></div>
+        `;
+
+        document.getElementById("next-btn").style.display =
+            currentQuestion < 9 ? "inline-block" : "none";
+        document.getElementById("finish-btn").style.display =
+            currentQuestion === 9 ? "inline-block" : "none";
+    }
+
+    function nextQuestion() {
+        const input = document.getElementById("answer-input");
+        const msg = document.getElementById("feedback-message");
+
+        msg.innerHTML = "";
+        if (input.value.trim() === "") {
+            msg.innerHTML = "Debes escribir una respuesta.";
+            return;
+        }
+
+        answers.push(input.value.trim().toLowerCase());
+
+        if (currentQuestion === 5) {
+            openVerification("checkpoint");
+            return;
+        }
+
+        currentQuestion++;
+        showNextQuestion();
+    }
+
+    function finishExam() {
+        const input = document.getElementById("answer-input");
+        const msg = document.getElementById("feedback-message");
+
+        msg.innerHTML = "";
+        if (input.value.trim() === "") {
+            msg.innerHTML = "Debes escribir una respuesta.";
+            return;
+        }
+
+        answers.push(input.value.trim().toLowerCase());
+        openVerification("final");
+    }
+
+    function openVerification(mode) {
+        const vc = document.getElementById("video-container");
+        vc.dataset.mode = mode;
+        vc.style.display = "block";
+
+        g_currentChallenge = 0;
+        g_passed = false;
+        g_turnStable = 0;
+
+        document.getElementById("form-container").style.display = "none";
+        document.getElementById("start-gesture-btn").style.display = "inline-block";
+        document.getElementById("status").textContent = "Pulsa iniciar verificación";
+        document.getElementById("gesture-title").textContent = "Verificación facial";
+    }
+
+    /* ===================================================================
+       SISTEMA DE RETOS BIOMÉTRICOS
+    =================================================================== */
+
+    let g_currentChallenge = 0;
+    let g_passed = false;
+    let g_turnStable = 0;
+
+    const g_challenges = [
+        "Gira la cabeza 🤖",
+        "Abre la boca 👄",
+        "Parpadea 👁"
+    ];
+
+    let exam_faceMesh = null;
+    let exam_camera = null;
+    let isCameraActive = false;
+    let faceMeshInitialized = false;
+
+    function initFaceMesh() {
+        if (faceMeshInitialized) {
+            return;
+        }
+
+        exam_faceMesh = new FaceMesh({
+            locateFile: f => `https://cdn.jsdelivr.net/npm/@mediapipe/face_mesh/${f}`
+        });
+
+        exam_faceMesh.setOptions({
+            maxNumFaces: 1,
+            refineLandmarks: true,
+            minDetectionConfidence: 0.7,
+            minTrackingConfidence: 0.7
+        });
+
+        exam_faceMesh.onResults(handleFaceMeshResults);
+        faceMeshInitialized = true;
+    }
+
+    function handleFaceMeshResults(res) {
+        if (!res.multiFaceLandmarks || res.multiFaceLandmarks.length === 0) return;
+
+        const lm = res.multiFaceLandmarks[0];
+
+        function dist(a, b) {
+            return Math.sqrt((a.x - b.x) ** 2 + (a.y - b.y) ** 2);
+        }
+
+        function ar(top, bottom, left, right) {
+            return dist(top, bottom) / dist(left, right);
+        }
+
+        const leftCheek = lm[234];
+        const rightCheek = lm[454];
+        const nose = lm[1];
+        const ratio = dist(nose, leftCheek) / dist(nose, rightCheek);
+        const mouthAR = ar(lm[13], lm[14], lm[78], lm[308]);
+        const eyeAR = ar(lm[159], lm[145], lm[33], lm[133]);
+
+        // RETO 1: GIRO
+        if (g_currentChallenge === 0) {
+            if (ratio > 1.18 || ratio < 0.82) {
+                g_turnStable++;
+            } else {
+                g_turnStable = 0;
+            }
+
+            if (g_turnStable > 8) {
+                g_currentChallenge++;
+                g_turnStable = 0;
+                showGestureInstruction("✓ Bien! Ahora: " + g_challenges[1], "green");
+                setTimeout(() => {
+                    showGestureInstruction(g_challenges[1]);
+                }, 1000);
+            }
+        }
+        // RETO 2: BOCA
+        else if (g_currentChallenge === 1) {
+            if (mouthAR > 0.33) {
+                g_currentChallenge++;
+                showGestureInstruction("✓ Perfecto! Ahora: " + g_challenges[2], "green");
+                setTimeout(() => {
+                    showGestureInstruction(g_challenges[2]);
+                }, 1000);
+            }
+        }
+        // RETO 3: PARPADEO
+        else if (g_currentChallenge === 2) {
+            if (eyeAR < 0.18) {
+                g_passed = true;
+                showGestureInstruction("Verificación completada ✓", "green");
+
+                setTimeout(() => {
+                    stopCamera();
+                    completeGestureVerification();
+                }, 1200);
+            }
+        }
+    }
+
+    function startExamGesture() {
+        g_currentChallenge = 0;
+        g_passed = false;
+        g_turnStable = 0;
+        
+        showGestureInstruction(g_challenges[g_currentChallenge]);
+        document.getElementById("start-gesture-btn").style.display = "none";
+
+        initFaceMesh();
+
+        if (!exam_camera) {
+            exam_camera = new Camera(document.getElementById("video"), {
+                onFrame: async () => {
+                    if (isCameraActive && exam_faceMesh) {
+                        await exam_faceMesh.send({ image: document.getElementById("video") });
+                    }
+                },
+                width: 640,
+                height: 480
+            });
+        }
+
+        isCameraActive = true;
+        exam_camera.start();
+    }
+
+    function stopCamera() {
+        isCameraActive = false;
+        
+        if (exam_camera) {
+            exam_camera.stop();
+            
+            const video = document.getElementById("video");
+            if (video.srcObject) {
+                video.srcObject.getTracks().forEach(track => track.stop());
+            }
+        }
+    }
+
+    function showGestureInstruction(text, color = "#222") {
+        const t = document.getElementById("gesture-title");
+        t.style.color = color;
+        t.textContent = text;
+    }
+
+    function completeGestureVerification() {
+        const vc = document.getElementById("video-container");
+        const mode = vc.dataset.mode;
+
+        vc.style.display = "none";
+
+        if (mode === "start") {
+            showNextQuestion();
+            return;
+        }
+
+        if (mode === "checkpoint") {
+            currentQuestion++;
+            showNextQuestion();
+            return;
+        }
+
+        if (mode === "final") {
+            finishScore();
+        }
+    }
+
+    function finishScore() {
+        let score = 0;
+
+        for (let i = 0; i < correctAnswers.length; i++) {
+            if (answers[i] === correctAnswers[i]) score++;
+        }
+
+        const percent = Math.round((score / correctAnswers.length) * 100);
+
+        alert(
+            "Examen finalizado\n" +
+            "Correctas: " + score + "/10\n" +
+            "Puntuación: " + percent + "%"
+        );
+
+        document.getElementById("start-exam").style.display = "inline-block";
+        resetExamState();
+    }
+    </script>
 </body>
 </html>
